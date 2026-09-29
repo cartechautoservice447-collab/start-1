@@ -209,14 +209,20 @@ export function CourseDashboard({
   const favNotes = notes.filter((n) => n.favorite).length;
 
   return (
-    <main className="app-backdrop relative min-h-[100dvh] w-full overflow-x-hidden pb-[calc(6rem+env(safe-area-inset-bottom,0px))] md:pb-12">
+    <main className="app-backdrop relative isolate min-h-[100dvh] w-full overflow-x-hidden pb-[calc(6rem+env(safe-area-inset-bottom,0px))] md:pb-16">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
+        <div className="absolute top-[28rem] -right-48 h-[28rem] w-[28rem] rounded-full bg-violet-500/[0.07] blur-[110px]" />
+        <div className="absolute bottom-0 -left-48 h-[28rem] w-[28rem] rounded-full bg-emerald-500/[0.06] blur-[110px]" />
+      </div>
       <div className="grain-overlay pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto w-full max-w-[1240px] p-3.5 sm:p-8">
+      <div className="relative mx-auto w-full max-w-[1320px] p-4 sm:p-8 lg:p-10">
 
         {/* ═══════════════════════════════════════════════════════════════
             DESKTOP HEADER — completely unchanged
         ═══════════════════════════════════════════════════════════════ */}
-        <header className="hidden sm:flex glass-panel animate-panel-in flex-wrap items-center justify-between gap-3.5 sm:gap-5 rounded-[2rem] p-5 sm:p-8 min-h-[96px] sm:min-h-[116px] shadow-2xl backdrop-blur-2xl">
+        <header className="hidden sm:flex glass-panel animate-panel-in relative overflow-hidden flex-wrap items-center justify-between gap-5 rounded-[2.25rem] border border-white/15 bg-white/[0.055] p-6 sm:p-9 min-h-[128px] shadow-[0_28px_80px_-36px_rgba(0,0,0,0.85)] backdrop-blur-3xl">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             {/* Brand Logo Icon Button: Clicking opens Study Tools */}
             <button
@@ -226,34 +232,34 @@ export function CourseDashboard({
                 haptic("medium");
                 onOpenMenu?.();
               }}
-              className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border border-primary/35 bg-gradient-to-br from-primary/25 to-emerald-500/20 text-primary shadow-[0_0_24px_-4px_hsl(var(--primary)/0.7)] shrink-0 active:scale-90 hover:scale-105 hover:border-primary transition-all duration-200 cursor-pointer"
+              className="relative z-10 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-[1.15rem] border border-primary/40 bg-gradient-to-br from-primary/35 via-primary/20 to-emerald-500/25 text-primary shadow-[0_0_32px_-4px_hsl(var(--primary)/0.8)] shrink-0 active:scale-90 hover:scale-105 hover:border-primary transition-all duration-200 cursor-pointer"
               title="Open Study Tools (Zen Focus, MD Cheatsheet, Flashcards, Pomodoro)"
             >
               <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary animate-pulse" />
             </button>
 
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <h1 className="text-[1.35rem] sm:text-[1.85rem] font-bold tracking-tight text-foreground truncate">
+            <div className="relative z-10 min-w-0">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h1 className="text-[1.35rem] sm:text-[2.15rem] font-extrabold leading-[1.08] tracking-tight text-foreground">
                   {greetingInfo.greeting}
                 </h1>
-                <span className="hidden sm:inline-flex rounded-full border border-primary/25 bg-primary/10 px-2 py-0.5 text-[0.65rem] font-bold text-primary">
+                <span className="hidden sm:inline-flex items-center rounded-full border border-primary/30 bg-primary/12 px-3 py-1 text-[0.68rem] font-bold tracking-wide text-primary shadow-[0_10px_24px_-14px_hsl(var(--primary)/0.9)]">
                   {greetingInfo.pill}
                 </span>
               </div>
-              <p className="mt-0.5 text-xs sm:text-[0.92rem] text-muted-foreground truncate">
+              <p className="mt-2 text-xs sm:text-[0.98rem] leading-relaxed text-muted-foreground">
                 {greetingInfo.subtitle}
               </p>
             </div>
           </div>
 
           {/* Action Buttons: Settings Gear Icon on Mobile & Desktop */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="relative z-10 flex items-center gap-2.5 shrink-0">
             <button
               type="button"
               aria-label="Settings"
               onClick={onOpenSettings}
-              className="flex items-center gap-1.5 sm:gap-2 rounded-xl border border-white/10 bg-white/[0.05] p-2.5 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-medium text-muted-foreground transition-all duration-200 hover:border-white/20 hover:bg-white/[0.08] hover:text-foreground active:scale-95 cursor-pointer shadow-sm"
+              className="flex items-center gap-1.5 sm:gap-2 rounded-2xl border border-white/12 bg-white/[0.07] p-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-semibold text-muted-foreground transition-all duration-200 hover:border-primary/35 hover:bg-white/[0.11] hover:text-foreground active:scale-95 cursor-pointer shadow-[0_12px_28px_-20px_rgba(0,0,0,0.9)]"
             >
               <Settings className="h-4 w-4" />
               <span className="hidden sm:inline">Settings</span>
@@ -274,9 +280,9 @@ export function CourseDashboard({
         {/* ═══════════════════════════════════════════════════════════════
             MOBILE HEADER — premium redesign (sm:hidden)
         ═══════════════════════════════════════════════════════════════ */}
-        <header className="sm:hidden animate-panel-in">
+        <header className="sm:hidden animate-panel-in pt-1">
           {/* Top action bar */}
-          <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center justify-between mb-7">
             <button
               type="button"
               aria-label="Open study tools"
@@ -284,7 +290,7 @@ export function CourseDashboard({
                 haptic("medium");
                 onOpenMenu?.();
               }}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary/35 bg-gradient-to-br from-primary/25 to-emerald-500/20 text-primary shadow-[0_0_20px_-4px_hsl(var(--primary)/0.6)] active:scale-90 transition-all duration-200 cursor-pointer"
+              className="flex h-11 w-11 items-center justify-center rounded-[1.1rem] border border-primary/40 bg-gradient-to-br from-primary/35 to-emerald-500/25 text-primary shadow-[0_0_28px_-5px_hsl(var(--primary)/0.75)] active:scale-90 transition-all duration-200 cursor-pointer"
             >
               <Sparkles className="h-5 w-5 text-primary animate-pulse" />
             </button>
@@ -304,7 +310,7 @@ export function CourseDashboard({
                 type="button"
                 aria-label="Settings"
                 onClick={onOpenSettings}
-                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-muted-foreground active:scale-90 transition-all duration-200 cursor-pointer"
+                className="flex h-11 w-11 items-center justify-center rounded-[1.1rem] border border-white/12 bg-white/[0.07] text-muted-foreground shadow-[0_12px_28px_-20px_rgba(0,0,0,0.8)] active:scale-90 transition-all duration-200 cursor-pointer"
               >
                 <Settings className="h-4.5 w-4.5" />
               </button>
@@ -328,7 +334,7 @@ export function CourseDashboard({
         {/* ═══════════════════════════════════════════════════════════════
             DESKTOP Stat Cards Grid — completely unchanged
         ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden sm:grid mt-4 sm:mt-6 grid-cols-3 gap-2 sm:gap-4">
+        <div className="hidden sm:grid mt-6 grid-cols-3 gap-5">
           <button
             type="button"
             onClick={() => {
@@ -336,7 +342,7 @@ export function CourseDashboard({
               const el = document.getElementById("courses-section");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="glass-panel group rounded-2xl p-2.5 sm:p-4 flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left transition-all duration-200 hover:border-primary/40 hover:bg-white/[0.06] active:scale-[0.96] cursor-pointer shadow-sm"
+            className="glass-panel group relative overflow-hidden rounded-3xl border border-white/12 bg-white/[0.045] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4 text-center sm:text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:bg-white/[0.08] active:scale-[0.98] cursor-pointer shadow-[0_18px_42px_-30px_rgba(0,0,0,0.9)]"
             title="Jump to Courses"
           >
             <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white/[0.06] text-primary shrink-0 transition-transform group-hover:scale-110">
@@ -388,7 +394,7 @@ export function CourseDashboard({
         {/* ═══════════════════════════════════════════════════════════════
             MOBILE Stat Cards — Premium horizontal pill row
         ═══════════════════════════════════════════════════════════════ */}
-        <div className="sm:hidden mb-6 grid grid-cols-3 gap-3">
+        <div className="sm:hidden mb-8 grid grid-cols-3 gap-3">
           <button
             type="button"
             onClick={() => {
@@ -396,7 +402,7 @@ export function CourseDashboard({
               const el = document.getElementById("courses-section-mobile");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-primary/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
+            className="glass-panel group flex flex-col items-center gap-2.5 rounded-[1.35rem] p-4 border border-white/12 bg-white/[0.045] hover:border-primary/45 active:scale-[0.97] transition-all duration-200 cursor-pointer shadow-[0_16px_34px_-28px_rgba(0,0,0,0.9)]"
           >
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 border border-primary/25 text-primary transition-transform group-active:scale-90">
               <FolderOpen className="h-5 w-5" />
@@ -584,7 +590,7 @@ export function CourseDashboard({
                       haptic("light");
                       onOpenNote?.(note.id, note.courseId || undefined);
                     }}
-                    className="glass-panel snap-start shrink-0 w-[220px] rounded-[1.4rem] p-4 border border-white/10 hover:border-primary/35 active:scale-[0.97] transition-all duration-200 cursor-pointer flex flex-col justify-between select-none shadow-sm"
+                    className="glass-panel snap-start shrink-0 w-[244px] rounded-[1.65rem] p-5 border border-white/12 bg-white/[0.045] hover:border-primary/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between select-none shadow-[0_18px_40px_-30px_rgba(0,0,0,0.9)]"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-1 mb-2.5">
@@ -702,7 +708,7 @@ export function CourseDashboard({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search course title or description..."
-              className="w-full rounded-2xl border border-white/10 bg-white/[0.05] pl-10 pr-4 py-2.5 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 backdrop-blur-xl focus:border-primary/50 focus:outline-none"
+              className="w-full rounded-2xl border border-white/12 bg-white/[0.055] pl-11 pr-4 py-3 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 shadow-[0_14px_32px_-26px_rgba(0,0,0,0.9)] backdrop-blur-xl transition-all focus:border-primary/55 focus:bg-white/[0.08] focus:outline-none"
             />
           </div>
         </div>
@@ -732,7 +738,7 @@ export function CourseDashboard({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search courses..."
-              className="w-full rounded-2xl border border-white/10 bg-white/[0.05] pl-11 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 backdrop-blur-xl focus:border-primary/50 focus:outline-none transition-colors"
+              className="w-full rounded-2xl border border-white/12 bg-white/[0.055] pl-11 pr-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/50 shadow-[0_14px_32px_-26px_rgba(0,0,0,0.9)] backdrop-blur-xl focus:border-primary/55 focus:bg-white/[0.08] focus:outline-none transition-all"
             />
           </div>
         </div>
@@ -801,7 +807,7 @@ export function CourseDashboard({
             DESKTOP Course Cards Grid — completely unchanged original
         ═══════════════════════════════════════════════════════════════ */}
         <div
-          className="hidden sm:grid mt-[30px] w-full grid-cols-2 items-start gap-x-[9px] gap-y-[18px] sm:mt-[30px] sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
+          className="hidden sm:grid mt-8 w-full grid-cols-2 items-start gap-5 lg:mt-9 lg:grid-cols-3 lg:gap-6"
         >
           {filteredCourses.map((c, i) => {
             const courseNotes = notes.filter((n) => n.courseId === c.id);
@@ -813,7 +819,7 @@ export function CourseDashboard({
             return (
               <article
                 key={c.id}
-                className="group relative h-[188px] min-h-[188px] w-full overflow-visible"
+                className="group relative h-[214px] min-h-[214px] w-full overflow-visible"
               >
                 <div
                   role="button"
@@ -830,7 +836,7 @@ export function CourseDashboard({
                     }
                   }}
                   style={{ animationDelay: `${i * 45}ms` }}
-                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-2xl p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:border-white/20 hover:shadow-2xl active:scale-[0.985]"
+                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-[1.65rem] border border-white/12 bg-white/[0.045] p-6 text-left shadow-[0_22px_50px_-36px_rgba(0,0,0,0.95)] transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.012] hover:border-primary/35 hover:bg-white/[0.075] hover:shadow-[0_30px_65px_-38px_rgba(0,0,0,1)] active:scale-[0.985]"
                 >
                   <div className="min-w-0">
                     <div className="flex min-w-0 items-start justify-between gap-2.5 pr-12">
@@ -906,7 +912,7 @@ export function CourseDashboard({
         {/* ═══════════════════════════════════════════════════════════════
             MOBILE Course Cards — Premium full-width list redesign
         ═══════════════════════════════════════════════════════════════ */}
-        <div className="sm:hidden space-y-3">
+        <div className="sm:hidden space-y-4">
           {filteredCourses.map((c, i) => {
             const courseNotes = notes.filter((n) => n.courseId === c.id);
             const last = courseNotes.length > 0
@@ -931,7 +937,7 @@ export function CourseDashboard({
                     }
                   }}
                   style={{ animationDelay: `${i * 50}ms` }}
-                  className="glass-panel animate-card-in w-full cursor-pointer select-none rounded-[1.5rem] p-5 border border-white/10 hover:border-white/18 active:scale-[0.985] transition-all duration-200 text-left"
+                  className="glass-panel animate-card-in w-full cursor-pointer select-none rounded-[1.7rem] border border-white/12 bg-white/[0.045] p-5 shadow-[0_18px_42px_-32px_rgba(0,0,0,0.95)] hover:border-primary/30 hover:bg-white/[0.07] active:scale-[0.985] transition-all duration-200 text-left"
                 >
                   {/* Top row: icon + course name + notes badge */}
                   <div className="flex items-start gap-4 mb-4">
