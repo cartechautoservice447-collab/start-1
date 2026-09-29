@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
 import {
   FolderOpen,
+  Folder,
+  FileText,
   Plus,
   ArrowRight,
   Settings,
@@ -502,8 +504,10 @@ export function CourseDashboard({
           </button>
         </div>
 
-        {/* Courses Grid: Single reduced-width card on Mobile, Multi-column Grid on Desktop */}
-        <div className="mt-6 flex flex-col items-center sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full">
+        {/* Course cards: dimensions/alignment matched to the Mobile-liquid-glass dashboard reference. */}
+        <div
+          className="mt-[30px] grid w-full grid-cols-2 items-start gap-x-[9px] gap-y-[18px] sm:mt-[30px] sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 max-[700px]:mt-[26px] max-[480px]:mt-6 max-[480px]:grid-cols-1 max-[480px]:gap-y-[15px] max-[380px]:mt-[22px] max-[380px]:gap-y-[13px] max-[330px]:mt-5 max-[330px]:gap-y-[11px]"
+        >
           {filteredCourses.map((c, i) => {
             const courseNotes = notes.filter((n) => n.courseId === c.id);
             const last = courseNotes.length > 0
@@ -512,25 +516,83 @@ export function CourseDashboard({
             const style = ACCENT_STYLES[c.color] ?? ACCENT_STYLES.sky;
 
             return (
-              <div
+              <article
                 key={c.id}
-                role="button"
-                tabIndex={0}
-                onClick={() => {
-                  haptic("light");
-                  onOpenCourse(c.id);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
+                className="relative h-[188px] min-h-[188px] w-full overflow-visible"
+              >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
                     haptic("light");
                     onOpenCourse(c.id);
-                  }
-                }}
-                style={{ animationDelay: `${i * 45}ms` }}
-                className="glass-panel animate-panel-in group relative cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl p-4 sm:p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:border-white/20 hover:shadow-2xl active:scale-[0.985] select-none flex flex-col justify-between w-full max-w-[340px] sm:max-w-none"
-              >
-                {/* Delete course button */}
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      haptic("light");
+                      onOpenCourse(c.id);
+                    }
+                  }}
+                  style={{ animationDelay: `${i * 45}ms` }}
+                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-2xl p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:border-white/20 hover:shadow-2xl active:scale-[0.985] max-[700px]:h-[172px] max-[700px]:min-h-[172px] max-[700px]:p-[13px] max-[480px]:h-[196px] max-[480px]:min-h-[196px] max-[480px]:p-3 max-[380px]:h-[164px] max-[380px]:min-h-[164px] max-[380px]:p-[11px] max-[330px]:h-[160px] max-[330px]:min-h-[160px] max-[330px]:p-2"
+                >
+                  <div className="min-w-0">
+                    <div className="flex min-w-0 items-start justify-between gap-2.5 pr-12 max-[700px]:gap-2 max-[700px]:pr-11 max-[480px]:pr-[43px]">
+                      <span
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow} transition-transform group-hover:scale-110 max-[700px]:h-[39px] max-[700px]:w-[39px] max-[700px]:rounded-[13px] max-[480px]:h-[38px] max-[480px]:w-[38px] max-[480px]:rounded-xl`}
+                      >
+                        <Folder className="h-6 w-6 max-[700px]:h-5 max-[700px]:w-5" />
+                      </span>
+
+                      <span className={`inline-flex max-w-[calc(100%_-_48px)] shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-mono tabular-nums text-muted-foreground max-[700px]:max-w-[calc(100%_-_44px)] max-[700px]:gap-1 max-[700px]:px-[7px] max-[700px]:py-[5px] max-[700px]:text-[9px] max-[480px]:max-w-[calc(100%_-_43px)]`}>
+                        <FileText className="h-3 w-3" />
+                        {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-4 truncate text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary max-[700px]:mt-[10px] max-[700px]:mb-1 max-[700px]:text-[14px] max-[480px]:mt-[9px] max-[480px]:text-[13.5px] max-[380px]:mt-[8px] max-[380px]:text-[13px]">
+                      {c.name}
+                    </h3>
+
+                    {c.description ? (
+                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground/80 max-[700px]:mt-[5px] max-[700px]:text-[9.5px] max-[700px]:leading-[1.3] max-[330px]:text-[9.2px]">
+                        {c.description}
+                      </p>
+                    ) : (
+                      <p className="mt-1 text-xs italic text-muted-foreground/40 max-[700px]:mt-[5px] max-[700px]:text-[9.5px] max-[330px]:text-[9.2px]">
+                        No description provided
+                      </p>
+                    )}
+
+                    <div className="mt-3 flex flex-wrap items-center gap-2 max-[700px]:mt-[7px] max-[700px]:gap-1.5">
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-lg border ${style.border} ${style.bg} px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${style.text} max-[700px]:gap-1 max-[700px]:rounded-lg max-[700px]:px-[6px] max-[700px]:py-[3px] max-[700px]:text-[8px]`}
+                      >
+                        <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                        {c.color}
+                      </span>
+
+                      {c.category && c.category !== c.description?.slice(0, 30) ? (
+                        <span className="hidden rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 max-[700px]:inline-block">
+                          {c.category}
+                        </span>
+                      ) : null}
+                    </div>
+                  </div>
+
+                  <div className="mt-5 flex min-w-0 items-center justify-between gap-1.5 border-t border-white/5 pt-3.5 pr-0 text-xs max-[700px]:mt-0 max-[700px]:gap-[6px] max-[700px]:pr-[34px] max-[700px]:pt-[7px] max-[700px]:text-[8.5px]">
+                    <span className="min-w-0 truncate text-muted-foreground/70">
+                      {last ? `Edited ${formatDate(last)}` : "No notes yet"}
+                    </span>
+                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 max-[700px]:gap-1">
+                      Open course
+                      <ArrowRight className="h-3.5 w-3.5 max-[700px]:h-3 max-[700px]:w-3" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Dedicated 44px delete target; kept outside the course surface so it never covers metadata. */}
                 <button
                   type="button"
                   aria-label={`Delete ${c.name}`}
@@ -538,62 +600,11 @@ export function CourseDashboard({
                     e.stopPropagation();
                     setDeletingCourse(c);
                   }}
-                  className="absolute right-3.5 top-3.5 z-10 rounded-xl border border-white/10 bg-black/40 p-2 text-muted-foreground opacity-90 sm:opacity-0 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/20 hover:text-destructive group-hover:opacity-100 active:scale-90 cursor-pointer"
+                  className="absolute right-[7px] top-[7px] z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/40 text-muted-foreground opacity-90 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/20 hover:text-destructive group-hover:opacity-100 active:scale-90 cursor-pointer max-[700px]:right-[6px] max-[700px]:top-[6px] max-[480px]:right-[5px] max-[480px]:top-[5px]"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="h-[15px] w-[15px]" />
                 </button>
-
-                <div>
-                  <div className="flex items-start justify-between gap-3">
-                    <span
-                      className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow} group-hover:scale-110 transition-transform`}
-                    >
-                      <FolderOpen className="h-5 w-5 sm:h-6 sm:w-6" />
-                    </span>
-                    <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-mono tabular-nums text-muted-foreground">
-                      {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-4 truncate text-base sm:text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                    {c.name}
-                  </h3>
-
-                  {c.description ? (
-                    <p className="mt-1 line-clamp-2 text-xs text-muted-foreground/80 leading-relaxed">
-                      {c.description}
-                    </p>
-                  ) : (
-                    <p className="mt-1 text-xs text-muted-foreground/40 italic">
-                      No description provided
-                    </p>
-                  )}
-
-                  <div className="mt-3 flex items-center gap-2 flex-wrap">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-lg border ${style.border} ${style.bg} px-2.5 py-0.5 text-[0.68rem] uppercase tracking-[0.16em] font-semibold ${style.text}`}
-                    >
-                      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-                      {c.color}
-                    </span>
-                    {c.category && c.category !== c.description?.slice(0, 30) && (
-                      <span className="inline-block rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] uppercase tracking-[0.16em] font-semibold text-muted-foreground/80">
-                        {c.category}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mt-5 flex items-center justify-between border-t border-white/5 pt-3.5">
-                  <span className="text-xs text-muted-foreground/70">
-                    {last ? `Edited ${formatDate(last)}` : "No notes yet"}
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs font-medium text-primary opacity-100 sm:opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                    Open Workspace
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </span>
-                </div>
-              </div>
+              </article>
             );
           })}
         </div>
