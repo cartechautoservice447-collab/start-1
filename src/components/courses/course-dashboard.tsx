@@ -209,835 +209,112 @@ export function CourseDashboard({
   const favNotes = notes.filter((n) => n.favorite).length;
 
   return (
-    <main className="app-backdrop relative isolate min-h-[100dvh] w-full overflow-x-hidden pb-[calc(6rem+env(safe-area-inset-bottom,0px))] md:pb-16">
+    <main className="app-backdrop relative isolate min-h-[100dvh] w-full overflow-x-hidden pb-[calc(7rem+env(safe-area-inset-bottom,0px))] text-foreground">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute top-[28rem] -right-48 h-[28rem] w-[28rem] rounded-full bg-violet-500/[0.07] blur-[110px]" />
-        <div className="absolute bottom-0 -left-48 h-[28rem] w-[28rem] rounded-full bg-emerald-500/[0.06] blur-[110px]" />
+        <div className="absolute -top-64 left-1/2 h-[46rem] w-[46rem] -translate-x-1/2 rounded-full bg-primary/[0.14] blur-[140px]" />
+        <div className="absolute top-[26rem] -right-56 h-[38rem] w-[38rem] rounded-full bg-violet-500/[0.09] blur-[140px]" />
+        <div className="absolute bottom-0 -left-56 h-[34rem] w-[34rem] rounded-full bg-emerald-500/[0.08] blur-[130px]" />
       </div>
-      <div className="grain-overlay pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto w-full max-w-[1320px] p-4 sm:p-8 lg:p-10">
+      <div className="grain-overlay pointer-events-none absolute inset-0 opacity-70" />
 
-        {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP HEADER — completely unchanged
-        ═══════════════════════════════════════════════════════════════ */}
-        <header className="hidden sm:flex glass-panel animate-panel-in relative overflow-hidden flex-wrap items-center justify-between gap-5 rounded-[2.25rem] border border-white/15 bg-white/[0.055] p-6 sm:p-9 min-h-[128px] shadow-[0_28px_80px_-36px_rgba(0,0,0,0.85)] backdrop-blur-3xl">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
-          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            {/* Brand Logo Icon Button: Clicking opens Study Tools */}
-            <button
-              type="button"
-              aria-label="Open study tools"
-              onClick={() => {
-                haptic("medium");
-                onOpenMenu?.();
-              }}
-              className="relative z-10 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-[1.15rem] border border-primary/40 bg-gradient-to-br from-primary/35 via-primary/20 to-emerald-500/25 text-primary shadow-[0_0_32px_-4px_hsl(var(--primary)/0.8)] shrink-0 active:scale-90 hover:scale-105 hover:border-primary transition-all duration-200 cursor-pointer"
-              title="Open Study Tools (Zen Focus, MD Cheatsheet, Flashcards, Pomodoro)"
-            >
-              <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 text-primary animate-pulse" />
+      <div className="relative mx-auto w-full max-w-[1440px] px-4 py-5 sm:px-8 sm:py-9 lg:px-12 lg:py-12">
+        <header className="animate-panel-in mb-7 flex items-center justify-between sm:mb-10">
+          <button type="button" aria-label="Open study tools" onClick={() => { haptic("medium"); onOpenMenu?.(); }} className="group flex items-center gap-3 rounded-2xl text-left transition-transform active:scale-[0.98]">
+            <span className="flex h-11 w-11 items-center justify-center rounded-[1.15rem] border border-primary/45 bg-gradient-to-br from-primary/45 via-primary/20 to-emerald-500/30 text-primary shadow-[0_0_34px_-4px_hsl(var(--primary)/0.85)] transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105 sm:h-12 sm:w-12">
+              <Sparkles className="h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" />
+            </span>
+            <span className="hidden sm:block">
+              <span className="block text-sm font-extrabold tracking-tight text-foreground">NewLumino</span>
+              <span className="mt-0.5 block text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Study studio</span>
+            </span>
+          </button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button type="button" aria-label="Refresh dashboard" onClick={() => onRefresh?.()} className="hidden h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.055] px-3 text-xs font-semibold text-muted-foreground transition-all hover:border-primary/35 hover:bg-white/[0.09] hover:text-foreground active:scale-95 sm:flex">
+              <RefreshCw className={["h-3.5 w-3.5", isSyncing ? "animate-spin" : ""].join(" ")} /> Sync
             </button>
-
-            <div className="relative z-10 min-w-0">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <h1 className="text-[1.35rem] sm:text-[2.15rem] font-extrabold leading-[1.08] tracking-tight text-foreground">
-                  {greetingInfo.greeting}
-                </h1>
-                <span className="hidden sm:inline-flex items-center rounded-full border border-primary/30 bg-primary/12 px-3 py-1 text-[0.68rem] font-bold tracking-wide text-primary shadow-[0_10px_24px_-14px_hsl(var(--primary)/0.9)]">
-                  {greetingInfo.pill}
-                </span>
-              </div>
-              <p className="mt-2 text-xs sm:text-[0.98rem] leading-relaxed text-muted-foreground">
-                {greetingInfo.subtitle}
-              </p>
-            </div>
-          </div>
-
-          {/* Action Buttons: Settings Gear Icon on Mobile & Desktop */}
-          <div className="relative z-10 flex items-center gap-2.5 shrink-0">
-            <button
-              type="button"
-              aria-label="Settings"
-              onClick={onOpenSettings}
-              className="flex items-center gap-1.5 sm:gap-2 rounded-2xl border border-white/12 bg-white/[0.07] p-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm font-semibold text-muted-foreground transition-all duration-200 hover:border-primary/35 hover:bg-white/[0.11] hover:text-foreground active:scale-95 cursor-pointer shadow-[0_12px_28px_-20px_rgba(0,0,0,0.9)]"
-            >
-              <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Settings</span>
-            </button>
-            {user ? (
-              <button
-                type="button"
-                aria-label="Log out"
-                onClick={() => void signOut()}
-                className="hidden sm:flex rounded-xl border border-white/10 bg-white/[0.05] p-2 sm:p-2.5 text-muted-foreground transition-all duration-200 hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive active:scale-95 cursor-pointer"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            ) : null}
+            <span className="flex h-10 items-center gap-2 rounded-xl border border-white/10 bg-white/[0.055] px-3 text-[0.68rem] font-bold text-muted-foreground">
+              <span className={["h-2 w-2 rounded-full", realtimeStatus === "connected" ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.95)]" : realtimeStatus === "connecting" ? "bg-amber-400 animate-pulse" : "bg-white/30"].join(" ")} />
+              <span className="hidden sm:inline">{realtimeStatus === "connected" ? "Synced" : realtimeStatus === "connecting" ? "Syncing" : "Offline"}</span>
+            </span>
+            <button type="button" aria-label="Settings" onClick={onOpenSettings} className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.055] text-muted-foreground transition-all hover:border-primary/35 hover:bg-white/[0.09] hover:text-foreground active:scale-95"><Settings className="h-4 w-4" /></button>
+            {user ? <button type="button" aria-label="Log out" onClick={() => void signOut()} className="hidden h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.055] text-muted-foreground transition-all hover:border-destructive/40 hover:bg-destructive/10 hover:text-destructive active:scale-95 sm:flex"><LogOut className="h-4 w-4" /></button> : null}
           </div>
         </header>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            MOBILE HEADER — premium redesign (sm:hidden)
-        ═══════════════════════════════════════════════════════════════ */}
-        <header className="sm:hidden animate-panel-in pt-1">
-          {/* Top action bar */}
-          <div className="flex items-center justify-between mb-7">
-            <button
-              type="button"
-              aria-label="Open study tools"
-              onClick={() => {
-                haptic("medium");
-                onOpenMenu?.();
-              }}
-              className="flex h-11 w-11 items-center justify-center rounded-[1.1rem] border border-primary/40 bg-gradient-to-br from-primary/35 to-emerald-500/25 text-primary shadow-[0_0_28px_-5px_hsl(var(--primary)/0.75)] active:scale-90 transition-all duration-200 cursor-pointer"
-            >
-              <Sparkles className="h-5 w-5 text-primary animate-pulse" />
-            </button>
-
-            <div className="flex items-center gap-2">
-              {/* Realtime dot */}
-              <span
-                className={`h-2 w-2 rounded-full ${
-                  realtimeStatus === "connected"
-                    ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"
-                    : realtimeStatus === "connecting"
-                      ? "bg-amber-400 animate-pulse"
-                      : "bg-white/30"
-                }`}
-              />
-              <button
-                type="button"
-                aria-label="Settings"
-                onClick={onOpenSettings}
-                className="flex h-11 w-11 items-center justify-center rounded-[1.1rem] border border-white/12 bg-white/[0.07] text-muted-foreground shadow-[0_12px_28px_-20px_rgba(0,0,0,0.8)] active:scale-90 transition-all duration-200 cursor-pointer"
-              >
-                <Settings className="h-4.5 w-4.5" />
-              </button>
+        <section className="animate-panel-in grid gap-5 lg:grid-cols-[minmax(0,1fr)_21rem]">
+          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.14] bg-white/[0.055] p-6 shadow-[0_32px_85px_-45px_rgba(0,0,0,0.95)] backdrop-blur-3xl sm:rounded-[2.5rem] sm:p-9">
+            <div aria-hidden="true" className="absolute -right-20 -top-28 h-80 w-80 rounded-full bg-primary/20 blur-3xl" />
+            <div className="relative">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[0.7rem] font-extrabold tracking-wide text-primary">{greetingInfo.pill}</span>
+              <h1 className="mt-4 max-w-3xl text-[2.15rem] font-extrabold leading-[1.02] tracking-[-0.045em] text-foreground sm:mt-5 sm:text-5xl lg:text-[4rem]">{greetingInfo.greeting}</h1>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">{greetingInfo.subtitle}</p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <button type="button" onClick={() => { haptic("medium"); onStartFocus?.(); }} className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-primary/30 bg-primary px-4 py-2.5 text-sm font-extrabold text-primary-foreground shadow-[0_18px_35px_-16px_hsl(var(--primary)/0.7)] transition-all hover:-translate-y-0.5 hover:shadow-[0_22px_42px_-16px_hsl(var(--primary)/0.85)] active:translate-y-0 active:scale-[0.98]"><Zap className="h-4 w-4" />Begin focus session</button>
+                <button type="button" onClick={() => onQuickNewNote?.()} className="inline-flex min-h-11 items-center gap-2 rounded-2xl border border-white/12 bg-white/[0.065] px-4 py-2.5 text-sm font-bold text-foreground transition-all hover:border-white/25 hover:bg-white/[0.1] active:scale-[0.98]"><Plus className="h-4 w-4" />Quick note</button>
+              </div>
             </div>
           </div>
 
-          {/* Greeting hero */}
-          <div className="mb-6 px-0.5">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[0.7rem] font-bold text-primary mb-3">
-              {greetingInfo.pill}
+          <aside className="relative overflow-hidden rounded-[2rem] border border-white/[0.14] bg-gradient-to-br from-white/[0.09] to-white/[0.025] p-6 shadow-[0_28px_70px_-45px_rgba(0,0,0,0.95)] backdrop-blur-3xl sm:p-7">
+            <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-emerald-400/[0.12] blur-3xl" />
+            <div className="relative flex items-center justify-between"><span className="flex h-10 w-10 items-center justify-center rounded-2xl border border-emerald-400/25 bg-emerald-400/10 text-emerald-300"><Flame className="h-5 w-5" /></span><span className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">Today</span></div>
+            <div className="relative mt-7">
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">Focus progress</p>
+              <div className="mt-2 flex items-end gap-2"><span className="text-4xl font-extrabold tracking-tight text-foreground">{progressPct}%</span><span className="mb-1 text-xs font-semibold text-muted-foreground">{todayMinutes} min logged</span></div>
+              <div className="mt-5 h-2 overflow-hidden rounded-full bg-white/[0.09]"><div className="h-full rounded-full bg-gradient-to-r from-primary via-cyan-400 to-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.8)] transition-all duration-700" style={{ width: String(progressPct) + "%" }} /></div>
+              <p className="mt-3 text-xs leading-relaxed text-muted-foreground">A {dailyGoalHours}-hour goal, one uninterrupted block at a time.</p>
             </div>
-            <h1 className="text-[1.9rem] font-extrabold tracking-tight text-foreground leading-[1.15]">
-              {greetingInfo.greeting}
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-              {greetingInfo.subtitle}
-            </p>
-          </div>
-        </header>
+          </aside>
+        </section>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP Stat Cards Grid — completely unchanged
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden sm:grid mt-6 grid-cols-3 gap-5">
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              const el = document.getElementById("courses-section");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="glass-panel group relative overflow-hidden rounded-3xl border border-white/12 bg-white/[0.045] p-4 sm:p-5 flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4 text-center sm:text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/45 hover:bg-white/[0.08] active:scale-[0.98] cursor-pointer shadow-[0_18px_42px_-30px_rgba(0,0,0,0.9)]"
-            title="Jump to Courses"
-          >
-            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white/[0.06] text-primary shrink-0 transition-transform group-hover:scale-110">
-              <FolderOpen className="h-4 w-4 sm:h-5 sm:w-5" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[0.6rem] sm:text-[0.65rem] uppercase tracking-wider text-muted-foreground truncate">Courses</p>
-              <p className="text-base sm:text-lg font-bold text-foreground font-mono">{courses.length}</p>
-            </div>
-          </button>
+        <section className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:grid-cols-4 sm:gap-4">
+          <button type="button" onClick={() => document.getElementById("library")?.scrollIntoView({ behavior: "smooth" })} className="group rounded-[1.45rem] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_18px_38px_-32px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1 hover:border-primary/35 hover:bg-white/[0.075] active:scale-[0.98] sm:p-5"><FolderOpen className="h-5 w-5 text-primary transition-transform group-hover:scale-110" /><p className="mt-5 text-2xl font-extrabold tracking-tight text-foreground">{courses.length}</p><p className="mt-1 text-xs font-semibold text-muted-foreground">Active courses</p></button>
+          <button type="button" onClick={() => onOpenAllNotes?.()} className="group rounded-[1.45rem] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_18px_38px_-32px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1 hover:border-cyan-400/35 hover:bg-white/[0.075] active:scale-[0.98] sm:p-5"><BookOpen className="h-5 w-5 text-cyan-300 transition-transform group-hover:scale-110" /><p className="mt-5 text-2xl font-extrabold tracking-tight text-foreground">{totalNotes}</p><p className="mt-1 text-xs font-semibold text-muted-foreground">Notes captured</p></button>
+          <button type="button" onClick={() => onOpenFavorites?.()} className="group rounded-[1.45rem] border border-white/10 bg-white/[0.045] p-4 text-left shadow-[0_18px_38px_-32px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1 hover:border-amber-400/35 hover:bg-white/[0.075] active:scale-[0.98] sm:p-5"><Star className="h-5 w-5 text-amber-300 transition-transform group-hover:scale-110" /><p className="mt-5 text-2xl font-extrabold tracking-tight text-foreground">{favNotes}</p><p className="mt-1 text-xs font-semibold text-muted-foreground">Saved favorites</p></button>
+          <button type="button" onClick={() => onStartFocus?.()} className="group rounded-[1.45rem] border border-primary/20 bg-primary/[0.08] p-4 text-left shadow-[0_18px_38px_-32px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1 hover:border-primary/45 hover:bg-primary/[0.13] active:scale-[0.98] sm:p-5"><Clock className="h-5 w-5 text-primary transition-transform group-hover:scale-110" /><p className="mt-5 text-2xl font-extrabold tracking-tight text-foreground">{todayMinutes}</p><p className="mt-1 text-xs font-semibold text-muted-foreground">Minutes focused</p></button>
+        </section>
 
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              onOpenAllNotes?.();
-            }}
-            className="glass-panel group rounded-2xl p-2.5 sm:p-4 flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left transition-all duration-200 hover:border-accent/40 hover:bg-white/[0.06] active:scale-[0.96] cursor-pointer shadow-sm"
-            title="View All Notes"
-          >
-            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white/[0.06] text-accent shrink-0 transition-transform group-hover:scale-110">
-              <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[0.6rem] sm:text-[0.65rem] uppercase tracking-wider text-muted-foreground truncate">Notes</p>
-              <p className="text-base sm:text-lg font-bold text-foreground font-mono">{totalNotes}</p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              onOpenFavorites?.();
-            }}
-            className="glass-panel group rounded-2xl p-2.5 sm:p-4 flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3 text-center sm:text-left transition-all duration-200 hover:border-amber-500/40 hover:bg-white/[0.06] active:scale-[0.96] cursor-pointer shadow-sm"
-            title="View Favorites"
-          >
-            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-white/[0.06] text-amber-400 shrink-0 transition-transform group-hover:scale-110">
-              <Star className="h-4 w-4 sm:h-5 sm:w-5" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[0.6rem] sm:text-[0.65rem] uppercase tracking-wider text-muted-foreground truncate">Favorites</p>
-              <p className="text-base sm:text-lg font-bold text-foreground font-mono">{favNotes}</p>
-            </div>
-          </button>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            MOBILE Stat Cards — Premium horizontal pill row
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="sm:hidden mb-8 grid grid-cols-3 gap-3">
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              const el = document.getElementById("courses-section-mobile");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="glass-panel group flex flex-col items-center gap-2.5 rounded-[1.35rem] p-4 border border-white/12 bg-white/[0.045] hover:border-primary/45 active:scale-[0.97] transition-all duration-200 cursor-pointer shadow-[0_16px_34px_-28px_rgba(0,0,0,0.9)]"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 border border-primary/25 text-primary transition-transform group-active:scale-90">
-              <FolderOpen className="h-5 w-5" />
-            </div>
-            <div className="text-center">
-              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{courses.length}</p>
-              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Courses</p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              onOpenAllNotes?.();
-            }}
-            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-accent/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/15 border border-accent/25 text-accent transition-transform group-active:scale-90">
-              <BookOpen className="h-5 w-5" />
-            </div>
-            <div className="text-center">
-              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{totalNotes}</p>
-              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Notes</p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              haptic("light");
-              onOpenFavorites?.();
-            }}
-            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-amber-500/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/15 border border-amber-500/25 text-amber-400 transition-transform group-active:scale-90">
-              <Star className="h-5 w-5" />
-            </div>
-            <div className="text-center">
-              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{favNotes}</p>
-              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Saved</p>
-            </div>
-          </button>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            MOBILE Focus Progress Widget — premium redesign
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="sm:hidden mb-6">
-          <div className="glass-panel rounded-[1.6rem] p-5 border border-primary/20 bg-gradient-to-br from-primary/8 via-white/[0.01] to-amber-500/8 shadow-lg">
-            {/* Top row: label + streak badge */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/20 border border-primary/30">
-                  <Clock className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-foreground">Today's Focus</p>
-                  <p className="text-[0.65rem] text-muted-foreground">
-                    {todayMinutes}m of {dailyGoalHours * 60}m goal
-                  </p>
-                </div>
-              </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 border border-amber-500/25 px-2.5 py-1 text-[0.65rem] font-bold text-amber-300">
-                <Flame className="h-3 w-3" />
-                Streak
-              </span>
-            </div>
-
-            {/* Progress bar */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between text-[0.65rem] text-muted-foreground mb-1.5">
-                <span>Progress</span>
-                <span className="font-mono font-bold text-foreground">{progressPct}%</span>
-              </div>
-              <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-primary to-emerald-400 transition-all duration-700 ease-out"
-                  style={{ width: `${progressPct}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Start Focus CTA */}
-            <button
-              type="button"
-              onClick={() => {
-                haptic("medium");
-                onStartFocus?.();
-              }}
-              className="w-full flex items-center justify-center gap-2 rounded-2xl bg-primary/20 border border-primary/35 px-4 py-3 text-sm font-bold text-primary active:scale-[0.97] hover:bg-primary/28 transition-all duration-200 shadow-sm cursor-pointer"
-            >
-              <Zap className="h-4 w-4 text-amber-300" />
-              <span>Start Focus Session</span>
-            </button>
-          </div>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP Focus Widget — completely unchanged original
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden sm:block mt-3.5 glass-panel rounded-3xl p-3.5 border border-primary/25 bg-gradient-to-br from-primary/10 via-white/[0.02] to-amber-500/10 shadow-lg">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
-                <svg className="h-11 w-11 -rotate-90" viewBox="0 0 36 36">
-                  <path
-                    className="text-white/10"
-                    strokeWidth="3.2"
-                    stroke="currentColor"
-                    fill="none"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  />
-                  <path
-                    className="text-primary transition-all duration-700 ease-out"
-                    strokeDasharray={`${progressPct}, 100`}
-                    strokeWidth="3.2"
-                    strokeLinecap="round"
-                    stroke="currentColor"
-                    fill="none"
-                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  />
-                </svg>
-                <span className="absolute font-mono text-[0.65rem] font-bold text-foreground">
-                  {progressPct}%
-                </span>
-              </div>
-
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <h4 className="text-xs font-bold text-foreground truncate">Today's Focus</h4>
-                  <span className="rounded-full bg-amber-500/20 px-1.5 py-0.2 text-[0.58rem] font-bold text-amber-300 flex items-center gap-0.5">
-                    <Flame className="h-2.5 w-2.5" />
-                    <span>Streak</span>
-                  </span>
-                </div>
-                <p className="text-[0.65rem] text-muted-foreground truncate mt-0.5">
-                  {todayMinutes}m of {dailyGoalHours * 60}m daily goal
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                haptic("medium");
-                onStartFocus?.();
-              }}
-              className="shrink-0 flex items-center gap-1.5 rounded-xl bg-primary/20 border border-primary/40 px-3 py-2 text-xs font-bold text-primary active:scale-90 hover:bg-primary/30 transition shadow-sm cursor-pointer"
-            >
-              <Zap className="h-3.5 w-3.5 text-amber-300" />
-              <span>Start Focus</span>
-            </button>
-          </div>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            MOBILE Recent Notes — premium redesign (sm:hidden)
-        ═══════════════════════════════════════════════════════════════ */}
-        {recentNotes.length > 0 && (
-          <div className="sm:hidden mb-7">
-            {/* Section header */}
-            <div className="flex items-center justify-between px-0.5 mb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/15">
-                  <Clock className="h-3.5 w-3.5 text-primary" />
-                </div>
-                <h3 className="text-sm font-bold text-foreground">Continue Studying</h3>
-              </div>
-              <span className="text-[0.65rem] text-muted-foreground font-medium">Recent</span>
-            </div>
-
-            {/* Horizontal Swipeable Carousel */}
-            <div className="flex gap-3 overflow-x-auto pb-2 scroll-sleek snap-x snap-mandatory -mx-1 px-1">
-              {recentNotes.map((note) => {
+        <section className="mt-10 sm:mt-14">
+          <div className="mb-4 flex items-end justify-between gap-4 sm:mb-5"><div><p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-primary">Pick up where you left off</p><h2 className="mt-1 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">Continue studying</h2></div><button type="button" onClick={() => onOpenAllNotes?.()} className="hidden items-center gap-1 text-sm font-bold text-primary transition-colors hover:text-foreground sm:inline-flex">View library <ArrowRight className="h-4 w-4" /></button></div>
+          {recentNotes.length > 0 ? (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {recentNotes.map((note, index) => {
                 const course = courses.find((c) => c.id === note.courseId);
                 const accent = course ? (ACCENT_STYLES[course.color] ?? ACCENT_STYLES.sky) : ACCENT_STYLES.sky;
-
-                return (
-                  <div
-                    key={note.id}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => {
-                      haptic("light");
-                      onOpenNote?.(note.id, note.courseId || undefined);
-                    }}
-                    className="glass-panel snap-start shrink-0 w-[244px] rounded-[1.65rem] p-5 border border-white/12 bg-white/[0.045] hover:border-primary/40 active:scale-[0.98] transition-all duration-200 cursor-pointer flex flex-col justify-between select-none shadow-[0_18px_40px_-30px_rgba(0,0,0,0.9)]"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-2.5">
-                        <span
-                          className={`inline-flex items-center gap-1.5 rounded-full border ${accent.border} ${accent.bg} px-2.5 py-1 text-[0.62rem] font-bold ${accent.text} truncate max-w-[140px]`}
-                        >
-                          <span className={`h-1.5 w-1.5 rounded-full ${accent.dot} shrink-0`} />
-                          <span className="truncate">{course?.name || "General"}</span>
-                        </span>
-                        {note.favorite && (
-                          <Star className="h-3.5 w-3.5 text-amber-400 fill-amber-400 shrink-0" />
-                        )}
-                      </div>
-
-                      <h4 className="text-[0.88rem] font-bold text-foreground truncate leading-snug">
-                        {note.title || "Untitled Note"}
-                      </h4>
-
-                      <p className="text-[0.72rem] text-muted-foreground line-clamp-2 mt-1.5 leading-relaxed">
-                        {note.body?.replace(/[#*`>_-]/g, "").slice(0, 80) || "Empty note snippet..."}
-                      </p>
-                    </div>
-
-                    <div className="mt-3 pt-2.5 border-t border-white/8 flex items-center justify-between text-[0.65rem] text-muted-foreground/70">
-                      <span>{formatDate(note.updatedAt)}</span>
-                      <span className="text-primary font-semibold flex items-center gap-0.5">
-                        Resume <ChevronRight className="h-3 w-3" />
-                      </span>
-                    </div>
-                  </div>
-                );
+                return <button key={note.id} type="button" onClick={() => { haptic("light"); onOpenNote?.(note.id, note.courseId || undefined); }} style={{ animationDelay: String(index * 55) + "ms" }} className="group animate-card-in min-h-[180px] rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-5 text-left shadow-[0_18px_40px_-32px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1 hover:border-primary/35 hover:bg-white/[0.075] active:scale-[0.985]">
+                  <div className="flex items-start justify-between gap-3"><span className={["inline-flex max-w-[80%] items-center gap-1.5 truncate rounded-full border px-2.5 py-1 text-[0.64rem] font-bold", accent.border, accent.bg, accent.text].join(" ")}><span className={["h-1.5 w-1.5 shrink-0 rounded-full", accent.dot].join(" ")} /><span className="truncate">{course?.name || "General"}</span></span>{note.favorite ? <Star className="h-3.5 w-3.5 shrink-0 fill-amber-400 text-amber-400" /> : null}</div>
+                  <div className="mt-5"><h3 className="line-clamp-2 text-base font-extrabold leading-snug tracking-tight text-foreground">{note.title || "Untitled Note"}</h3><p className="mt-2 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{note.body?.replace(/[#*>_-]/g, "").slice(0, 110) || "Add a note to start your study trail."}</p></div>
+                  <div className="mt-5 flex items-center justify-between border-t border-white/[0.08] pt-3 text-[0.68rem] font-semibold text-muted-foreground"><span>{formatDate(note.updatedAt)}</span><span className="flex items-center gap-1 text-primary">Resume <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span></div>
+                </button>;
               })}
             </div>
-          </div>
-        )}
+          ) : <div className="rounded-[1.75rem] border border-dashed border-white/15 bg-white/[0.025] p-8 text-center sm:p-10"><FileText className="mx-auto h-6 w-6 text-muted-foreground/60" /><p className="mt-3 text-sm font-bold text-foreground">Your study trail starts here.</p><button type="button" onClick={() => onQuickNewNote?.()} className="mt-4 text-sm font-extrabold text-primary hover:text-foreground">Create your first note</button></div>}
+        </section>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP Recent Notes — completely unchanged original
-        ═══════════════════════════════════════════════════════════════ */}
-        {recentNotes.length > 0 && (
-          <div className="hidden sm:block mt-4 space-y-2">
-            <div className="flex items-center justify-between px-1">
-              <div className="flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5 text-primary" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                  Continue Studying
-                </h3>
-              </div>
-              <span className="text-[0.6rem] font-mono text-muted-foreground">
-                Recent notes
-              </span>
-            </div>
+        <section id="library" className="mt-12 scroll-mt-6 sm:mt-16">
+          <div className="flex flex-col gap-5 border-b border-white/[0.1] pb-6 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-primary">Your workspace</p><h2 className="mt-1 text-3xl font-extrabold tracking-[-0.035em] text-foreground sm:text-4xl">Course library</h2><p className="mt-2 text-sm text-muted-foreground">A focused home for every subject, idea, and project.</p></div><button type="button" onClick={() => { haptic("medium"); setAdding(true); }} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-primary/30 bg-primary px-5 py-3 text-sm font-extrabold text-primary-foreground shadow-[0_18px_35px_-16px_hsl(var(--primary)/0.7)] transition-all hover:-translate-y-0.5 active:scale-[0.98]"><Plus className="h-4 w-4" />New course</button></div>
 
-            <div className="flex gap-2.5 overflow-x-auto pb-1.5 pt-0.5 scroll-sleek snap-x snap-mandatory">
-              {recentNotes.map((note) => {
-                const course = courses.find((c) => c.id === note.courseId);
-                const accent = course ? (ACCENT_STYLES[course.color] ?? ACCENT_STYLES.sky) : ACCENT_STYLES.sky;
-
-                return (
-                  <div
-                    key={note.id}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => {
-                      haptic("light");
-                      onOpenNote?.(note.id, note.courseId || undefined);
-                    }}
-                    className="glass-panel snap-start shrink-0 w-[230px] rounded-2xl p-3 border border-white/10 hover:border-primary/40 bg-white/[0.03] active:scale-[0.97] transition cursor-pointer flex flex-col justify-between select-none shadow-sm"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-1 mb-1.5">
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-md border ${accent.border} ${accent.bg} px-1.5 py-0.2 text-[0.6rem] font-bold ${accent.text} truncate max-w-[140px]`}
-                        >
-                          <span className={`h-1.5 w-1.5 rounded-full ${accent.dot} shrink-0`} />
-                          <span className="truncate">{course?.name || "General"}</span>
-                        </span>
-                        {note.favorite && (
-                          <Star className="h-3 w-3 text-amber-400 fill-amber-400 shrink-0" />
-                        )}
-                      </div>
-
-                      <h4 className="text-xs font-bold text-foreground truncate">
-                        {note.title || "Untitled Note"}
-                      </h4>
-
-                      <p className="text-[0.65rem] text-muted-foreground line-clamp-2 mt-1 leading-relaxed">
-                        {note.body?.replace(/[#*`>_-]/g, "").slice(0, 80) || "Empty note snippet..."}
-                      </p>
-                    </div>
-
-                    <div className="mt-2.5 pt-2 border-t border-white/5 flex items-center justify-between text-[0.6rem] text-muted-foreground/70">
-                      <span>{formatDate(note.updatedAt)}</span>
-                      <span className="text-primary font-medium flex items-center gap-0.5">
-                        Resume <ArrowRight className="h-2.5 w-2.5" />
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* ═══════════════════════════════════════════════════════════════
-            Filter & Actions Bar — Desktop unchanged, mobile redesigned
-        ═══════════════════════════════════════════════════════════════ */}
-
-        {/* Desktop filter bar */}
-        <div id="courses-section" className="hidden sm:flex mt-7 sm:mt-8 flex-col sm:flex-row items-end sm:items-center justify-between gap-3 scroll-mt-6">
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search course title or description..."
-              className="w-full rounded-2xl border border-white/12 bg-white/[0.055] pl-11 pr-4 py-3 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground/60 shadow-[0_14px_32px_-26px_rgba(0,0,0,0.9)] backdrop-blur-xl transition-all focus:border-primary/55 focus:bg-white/[0.08] focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Mobile section header + search */}
-        <div id="courses-section-mobile" className="sm:hidden mb-5 scroll-mt-6">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-base font-bold text-foreground">My Courses</h2>
-            <button
-              type="button"
-              onClick={() => {
-                haptic("medium");
-                setAdding(true);
-              }}
-              className="inline-flex items-center gap-1.5 rounded-2xl border border-primary/30 bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/20 active:scale-[0.97] transition-all duration-200 cursor-pointer"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              New Course
-            </button>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <label className="relative block w-full max-w-lg"><span className="sr-only">Search courses</span><Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground/60" /><input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search your course library..." className="w-full rounded-2xl border border-white/12 bg-white/[0.05] py-3 pl-11 pr-4 text-sm text-foreground shadow-[0_14px_32px_-26px_rgba(0,0,0,0.9)] outline-none transition-all placeholder:text-muted-foreground/55 focus:border-primary/55 focus:bg-white/[0.08]" /></label>
+            <div className="flex max-w-full items-center gap-2 overflow-x-auto pb-1">{categories.map((cat) => <button key={cat} type="button" onClick={() => setSelectedCategory(cat)} className={["shrink-0 rounded-full border px-3.5 py-2 text-xs font-bold capitalize transition-all", selectedCategory === cat ? "border-primary/35 bg-primary/15 text-primary shadow-[0_8px_20px_-14px_hsl(var(--primary)/0.9)]" : "border-white/10 bg-white/[0.035] text-muted-foreground hover:border-white/20 hover:bg-white/[0.07] hover:text-foreground"].join(" ")}>{cat}</button>)}</div>
           </div>
 
-          {/* Mobile search */}
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search courses..."
-              className="w-full rounded-2xl border border-white/12 bg-white/[0.055] pl-11 pr-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground/50 shadow-[0_14px_32px_-26px_rgba(0,0,0,0.9)] backdrop-blur-xl focus:border-primary/55 focus:bg-white/[0.08] focus:outline-none transition-all"
-            />
-          </div>
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            Category Pills + Create Button — Desktop unchanged
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="hidden sm:flex mt-5 items-center justify-between gap-4">
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none flex-1">
-            {categories.length > 2 ? (
-              categories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`rounded-full px-3 py-1 text-xs font-medium capitalize transition whitespace-nowrap ${
-                    selectedCategory === cat
-                      ? "bg-white/15 text-foreground border border-white/20 shadow-sm"
-                      : "text-muted-foreground hover:bg-white/5"
-                  }`}
-                >
-                  {cat}
+          {filteredCourses.length > 0 ? <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredCourses.map((c, index) => {
+              const courseNotes = notes.filter((n) => n.courseId === c.id);
+              const last = courseNotes.length > 0 ? Math.max(...courseNotes.map((n) => n.updatedAt)) : c.updatedAt || c.createdAt;
+              const style = ACCENT_STYLES[c.color] ?? ACCENT_STYLES.sky;
+              return <article key={c.id} className="group relative">
+                <button type="button" onClick={() => { haptic("light"); onOpenCourse(c.id); }} style={{ animationDelay: String(index * 45) + "ms" }} className="animate-card-in flex min-h-[255px] w-full flex-col rounded-[1.75rem] border border-white/10 bg-white/[0.045] p-6 text-left shadow-[0_20px_46px_-34px_rgba(0,0,0,0.95)] transition-all hover:-translate-y-1.5 hover:border-primary/35 hover:bg-white/[0.075] hover:shadow-[0_32px_62px_-38px_rgba(0,0,0,1)] active:scale-[0.985]">
+                  <div className="flex items-start justify-between gap-3 pr-9"><span className={["flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border", style.border, style.bg, style.text, style.glow].join(" ")}><Folder className="h-5 w-5" /></span><span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[0.65rem] font-bold tabular-nums text-muted-foreground"><FileText className="h-3 w-3" />{courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}</span></div>
+                  <div className="mt-5"><h3 className="line-clamp-2 text-xl font-extrabold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">{c.name}</h3><p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{c.description || "A new space for your focused work and ideas."}</p></div>
+                  <div className="mt-auto flex items-center justify-between border-t border-white/[0.08] pt-4"><span className={["inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.64rem] font-bold capitalize", style.border, style.bg, style.text].join(" ")}><span className={["h-1.5 w-1.5 rounded-full", style.dot].join(" ")} />{c.category || c.color}</span><span className="text-xs font-semibold text-muted-foreground">{last ? "Edited " + formatDate(last) : "No notes yet"}</span></div>
                 </button>
-              ))
-            ) : (
-              <div className="text-[0.65rem] uppercase tracking-widest text-muted-foreground/40 font-bold px-1">
-                Your Library
-              </div>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => {
-              haptic("medium");
-              setAdding(true);
-            }}
-            className="shrink-0 inline-flex items-center justify-center gap-2 rounded-2xl border border-primary/30 bg-primary px-5 py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Create Course</span>
-          </button>
-        </div>
-
-        {/* Mobile category pills */}
-        {categories.length > 2 && (
-          <div className="sm:hidden mb-4 flex items-center gap-2 overflow-x-auto pb-1 scroll-sleek -mx-1 px-1">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold capitalize transition-all whitespace-nowrap border ${
-                  selectedCategory === cat
-                    ? "bg-white/15 text-foreground border-white/25 shadow-sm"
-                    : "text-muted-foreground border-transparent hover:bg-white/5"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* ═══════════════════════════════════════════════════════════════
-            DESKTOP Course Cards Grid — completely unchanged original
-        ═══════════════════════════════════════════════════════════════ */}
-        <div
-          className="hidden sm:grid mt-8 w-full grid-cols-2 items-start gap-5 lg:mt-9 lg:grid-cols-3 lg:gap-6"
-        >
-          {filteredCourses.map((c, i) => {
-            const courseNotes = notes.filter((n) => n.courseId === c.id);
-            const last = courseNotes.length > 0
-              ? Math.max(...courseNotes.map((n) => n.updatedAt))
-              : c.updatedAt || c.createdAt;
-            const style = ACCENT_STYLES[c.color] ?? ACCENT_STYLES.sky;
-
-            return (
-              <article
-                key={c.id}
-                className="group relative h-[214px] min-h-[214px] w-full overflow-visible"
-              >
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    haptic("light");
-                    onOpenCourse(c.id);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      haptic("light");
-                      onOpenCourse(c.id);
-                    }
-                  }}
-                  style={{ animationDelay: `${i * 45}ms` }}
-                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-[1.65rem] border border-white/12 bg-white/[0.045] p-6 text-left shadow-[0_22px_50px_-36px_rgba(0,0,0,0.95)] transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.012] hover:border-primary/35 hover:bg-white/[0.075] hover:shadow-[0_30px_65px_-38px_rgba(0,0,0,1)] active:scale-[0.985]"
-                >
-                  <div className="min-w-0">
-                    <div className="flex min-w-0 items-start justify-between gap-2.5 pr-12">
-                      <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow} transition-transform group-hover:scale-110`}
-                      >
-                        <Folder className="h-6 w-6" />
-                      </span>
-
-                      <span className={`inline-flex max-w-[calc(100%_-_48px)] shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-mono tabular-nums text-muted-foreground`}>
-                        <FileText className="h-3 w-3" />
-                        {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
-                      </span>
-                    </div>
-
-                    <h3 className="mt-4 truncate text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
-                      {c.name}
-                    </h3>
-
-                    {c.description ? (
-                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground/80">
-                        {c.description}
-                      </p>
-                    ) : (
-                      <p className="mt-1 text-xs italic text-muted-foreground/40">
-                        No description provided
-                      </p>
-                    )}
-
-                    <div className="mt-3 flex flex-wrap items-center gap-2">
-                      <span
-                        className={`inline-flex items-center gap-1 rounded-lg border ${style.border} ${style.bg} px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${style.text}`}
-                      >
-                        <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-                        {c.color}
-                      </span>
-
-                      {c.category && c.category !== c.description?.slice(0, 30) ? (
-                        <span className="inline-block rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
-                          {c.category}
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex min-w-0 items-center justify-between gap-1.5 border-t border-white/5 pt-3.5 pr-0 text-xs">
-                    <span className="min-w-0 truncate text-muted-foreground/70">
-                      {last ? `Edited ${formatDate(last)}` : "No notes yet"}
-                    </span>
-                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100">
-                      Open course
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  aria-label={`Delete ${c.name}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeletingCourse(c);
-                  }}
-                  className="absolute right-[7px] top-[7px] z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/40 text-muted-foreground opacity-90 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/20 hover:text-destructive group-hover:opacity-100 active:scale-90 cursor-pointer"
-                >
-                  <Trash2 className="h-[15px] w-[15px]" />
-                </button>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* ═══════════════════════════════════════════════════════════════
-            MOBILE Course Cards — Premium full-width list redesign
-        ═══════════════════════════════════════════════════════════════ */}
-        <div className="sm:hidden space-y-4">
-          {filteredCourses.map((c, i) => {
-            const courseNotes = notes.filter((n) => n.courseId === c.id);
-            const last = courseNotes.length > 0
-              ? Math.max(...courseNotes.map((n) => n.updatedAt))
-              : c.updatedAt || c.createdAt;
-            const style = ACCENT_STYLES[c.color] ?? ACCENT_STYLES.sky;
-
-            return (
-              <article key={c.id} className="group relative">
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    haptic("light");
-                    onOpenCourse(c.id);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      haptic("light");
-                      onOpenCourse(c.id);
-                    }
-                  }}
-                  style={{ animationDelay: `${i * 50}ms` }}
-                  className="glass-panel animate-card-in w-full cursor-pointer select-none rounded-[1.7rem] border border-white/12 bg-white/[0.045] p-5 shadow-[0_18px_42px_-32px_rgba(0,0,0,0.95)] hover:border-primary/30 hover:bg-white/[0.07] active:scale-[0.985] transition-all duration-200 text-left"
-                >
-                  {/* Top row: icon + course name + notes badge */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <span
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow}`}
-                    >
-                      <Folder className="h-6 w-6" />
-                    </span>
-
-                    <div className="flex-1 min-w-0 pt-0.5">
-                      <h3 className="text-[1.05rem] font-bold tracking-tight text-foreground leading-snug truncate">
-                        {c.name}
-                      </h3>
-                      {c.description ? (
-                        <p className="mt-1 text-sm text-muted-foreground/80 line-clamp-2 leading-relaxed">
-                          {c.description}
-                        </p>
-                      ) : (
-                        <p className="mt-1 text-sm italic text-muted-foreground/40">
-                          No description
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Tags row */}
-                  <div className="flex items-center gap-2 flex-wrap mb-4">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full border ${style.border} ${style.bg} px-2.5 py-1 text-[0.68rem] font-bold capitalize ${style.text}`}
-                    >
-                      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-                      {c.color}
-                    </span>
-                    {c.category ? (
-                      <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[0.68rem] font-medium text-muted-foreground/80">
-                        {c.category}
-                      </span>
-                    ) : null}
-                    <span className="inline-flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.04] px-2.5 py-1 text-[0.68rem] font-mono text-muted-foreground">
-                      <FileText className="h-3 w-3" />
-                      {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
-                    </span>
-                  </div>
-
-                  {/* Bottom row: last edited + open arrow */}
-                  <div className="flex items-center justify-between pt-3.5 border-t border-white/8">
-                    <span className="text-xs text-muted-foreground/60">
-                      {last ? `Edited ${formatDate(last)}` : "No notes yet"}
-                    </span>
-                    <span className="flex items-center gap-1 text-sm font-semibold text-primary">
-                      Open <ChevronRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </div>
-
-                {/* Delete button */}
-                <button
-                  type="button"
-                  aria-label={`Delete ${c.name}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeletingCourse(c);
-                  }}
-                  className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/30 text-muted-foreground/70 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/15 hover:text-destructive active:scale-90 cursor-pointer"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* Empty state */}
-        {filteredCourses.length === 0 ? (
-          <div className="mt-12 glass-panel rounded-3xl p-12 text-center max-w-md mx-auto">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-muted-foreground/60 mx-auto mb-4">
-              <FolderOpen className="h-7 w-7" />
-            </div>
-            <h3 className="text-base font-semibold text-foreground">No courses found</h3>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {searchQuery
-                ? "Try a different search query."
-                : "Create your first course folder to begin taking notes."}
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setAdding(true);
-              }}
-              className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/10 bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground shadow-lg"
-            >
-              <Plus className="h-4 w-4" />
-              Create First Course
-            </button>
-          </div>
-        ) : null}
-      </div>
-
+                <button type="button" aria-label={"Delete " + c.name} onClick={() => setDeletingCourse(c)} className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/25 text-muted-foreground/70 opacity-100 backdrop-blur-md transition-all hover:border-destructive/40 hover:bg-destructive/15 hover:text-destructive active:scale-90 sm:opacity-0 sm:group-hover:opacity-100"><Trash2 className="h-3.5 w-3.5" /></button>
+              </article>;
+            })}
+          </div> : <div className="mt-6 rounded-[1.75rem] border border-dashed border-white/15 bg-white/[0.025] p-10 text-center"><FolderOpen className="mx-auto h-7 w-7 text-muted-foreground/55" /><h3 className="mt-4 text-lg font-extrabold text-foreground">No courses found</h3><p className="mt-2 text-sm text-muted-foreground">{searchQuery ? "Try a different search or category." : "Create your first course to organise your notes."}</p><button type="button" onClick={() => { setSearchQuery(""); setSelectedCategory("all"); setAdding(true); }} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-extrabold text-primary-foreground"><Plus className="h-4 w-4" />Create course</button></div>}
+        </section>
       {/* ═══════════════════════════════════════════════════════════════
           New Course Modal — Responsive Bottom Sheet on Mobile / Centered on Desktop
       ═══════════════════════════════════════════════════════════════ */}
