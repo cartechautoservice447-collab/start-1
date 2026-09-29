@@ -518,7 +518,7 @@ export function CourseDashboard({
             return (
               <article
                 key={c.id}
-                className="relative h-[188px] min-h-[188px] w-full overflow-visible"
+                className="group relative h-[188px] min-h-[188px] w-full overflow-visible max-[700px]:h-[172px] max-[700px]:min-h-[172px] max-[480px]:h-[196px] max-[480px]:min-h-[196px] max-[380px]:h-[164px] max-[380px]:min-h-[164px] max-[330px]:h-[160px] max-[330px]:min-h-[160px]"
               >
                 <div
                   role="button"
@@ -574,7 +574,7 @@ export function CourseDashboard({
                       </span>
 
                       {c.category && c.category !== c.description?.slice(0, 30) ? (
-                        <span className="hidden rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 max-[700px]:inline-block">
+                        <span className="inline-block rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 max-[700px]:hidden">
                           {c.category}
                         </span>
                       ) : null}
@@ -585,7 +585,7 @@ export function CourseDashboard({
                     <span className="min-w-0 truncate text-muted-foreground/70">
                       {last ? `Edited ${formatDate(last)}` : "No notes yet"}
                     </span>
-                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 max-[700px]:gap-1">
+                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100 max-[700px]:gap-1">
                       Open course
                       <ArrowRight className="h-3.5 w-3.5 max-[700px]:h-3 max-[700px]:w-3" />
                     </span>
