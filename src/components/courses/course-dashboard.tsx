@@ -315,6 +315,8 @@ export function CourseDashboard({
             })}
           </div> : <div className="mt-6 rounded-[1.75rem] border border-dashed border-white/15 bg-white/[0.025] p-10 text-center"><FolderOpen className="mx-auto h-7 w-7 text-muted-foreground/55" /><h3 className="mt-4 text-lg font-extrabold text-foreground">No courses found</h3><p className="mt-2 text-sm text-muted-foreground">{searchQuery ? "Try a different search or category." : "Create your first course to organise your notes."}</p><button type="button" onClick={() => { setSearchQuery(""); setSelectedCategory("all"); setAdding(true); }} className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-extrabold text-primary-foreground"><Plus className="h-4 w-4" />Create course</button></div>}
         </section>
+      </div>
+
       {/* ═══════════════════════════════════════════════════════════════
           New Course Modal — Responsive Bottom Sheet on Mobile / Centered on Desktop
       ═══════════════════════════════════════════════════════════════ */}
