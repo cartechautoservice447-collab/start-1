@@ -60,13 +60,13 @@ export function NoteList({
         </div>
       </header>
 
-      <div className="scroll-sleek min-h-0 flex-1 space-y-2.5 overflow-y-auto p-3">
+      <div className="scroll-sleek min-h-0 flex-1 space-y-3 md:space-y-2.5 overflow-y-auto p-4 md:p-3">
         {notes.length === 0 ? (
-          <div className="flex flex-col items-center justify-center px-4 py-16 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-muted-foreground/60 mb-3">
+          <div className="flex flex-col items-center justify-center px-4 py-20 md:py-16 text-center">
+            <div className="flex h-14 w-14 md:h-12 md:w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-muted-foreground/60 mb-3">
               <Sparkles className="h-5 w-5" />
             </div>
-            <p className="text-sm font-medium text-foreground/80">No notes found</p>
+            <p className="text-base md:text-sm font-medium text-foreground/80">No notes found</p>
             <p className="mt-1 text-xs text-muted-foreground max-w-[200px]">
               Tap &ldquo;New Note&rdquo; to start jotting down thoughts with instant Markdown.
             </p>

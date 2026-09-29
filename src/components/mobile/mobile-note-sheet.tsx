@@ -204,7 +204,7 @@ export function MobileNoteSheet({
             </div>
           </div>
         ) : (
-          <div className="mt-3 grid grid-cols-2 gap-2">
+          <div className="mt-3 grid grid-cols-2 gap-3">
             {/* Action 1: Star */}
             <button
               type="button"
@@ -212,7 +212,7 @@ export function MobileNoteSheet({
                 haptic("light");
                 onToggleFavorite(note.id);
               }}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
             >
               <Star className={cn("h-4 w-4", note.favorite && "fill-yellow-400 text-yellow-400")} />
               <span>{note.favorite ? "Unstar Note" : "Star Note"}</span>
@@ -225,7 +225,7 @@ export function MobileNoteSheet({
                 haptic("light");
                 setMoving(true);
               }}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 truncate touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 truncate touch-manipulation cursor-pointer"
             >
               <FolderOpen className="h-4 w-4 text-accent" />
               <span className="truncate">{currentCollection ? currentCollection.name : "Collection"}</span>
@@ -239,7 +239,7 @@ export function MobileNoteSheet({
                 onDuplicate(note.id);
                 onOpenChange(false);
               }}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
             >
               <Files className="h-4 w-4 text-primary" />
               <span>Duplicate</span>
@@ -249,7 +249,7 @@ export function MobileNoteSheet({
             <button
               type="button"
               onClick={handleCopy}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
             >
               {copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
               <span>{copied ? "Copied!" : "Copy MD"}</span>
@@ -259,7 +259,7 @@ export function MobileNoteSheet({
             <button
               type="button"
               onClick={handleShare}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
             >
               <Share2 className="h-4 w-4 text-cyan-400" />
               <span>Share</span>
@@ -269,7 +269,7 @@ export function MobileNoteSheet({
             <button
               type="button"
               onClick={handleExport}
-              className="flex items-center gap-2.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-xs font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
+              className="flex items-center gap-3 rounded-[1.1rem] border border-white/10 bg-white/[0.04] p-4 text-sm font-medium text-foreground transition-transform active:scale-95 touch-manipulation cursor-pointer"
             >
               <Download className="h-4 w-4 text-emerald-400" />
               <span>Export .md</span>
@@ -284,7 +284,7 @@ export function MobileNoteSheet({
                   onOpenChange(false);
                   onOpenFlashcards(note);
                 }}
-                className="col-span-2 flex items-center justify-center gap-2 rounded-2xl border border-purple-500/30 bg-purple-500/10 p-3 text-xs font-bold text-purple-300 transition-transform active:scale-95 hover:bg-purple-500/20 touch-manipulation cursor-pointer"
+                className="col-span-2 flex items-center justify-center gap-2.5 rounded-[1.1rem] border border-purple-500/30 bg-purple-500/10 p-4 text-sm font-bold text-purple-300 transition-transform active:scale-95 hover:bg-purple-500/20 touch-manipulation cursor-pointer"
               >
                 <Brain className="h-4 w-4" />
                 <span>Study with Flashcards</span>
@@ -298,7 +298,7 @@ export function MobileNoteSheet({
                 haptic("warning");
                 setConfirmDelete(true);
               }}
-              className="col-span-2 flex items-center justify-center gap-2 rounded-2xl border border-destructive/30 bg-destructive/10 p-3 text-xs font-semibold text-destructive transition-transform active:scale-95 hover:bg-destructive/20 touch-manipulation cursor-pointer"
+              className="col-span-2 flex items-center justify-center gap-2.5 rounded-[1.1rem] border border-destructive/30 bg-destructive/10 p-4 text-sm font-semibold text-destructive transition-transform active:scale-95 hover:bg-destructive/20 touch-manipulation cursor-pointer"
             >
               <Trash2 className="h-4 w-4" />
               <span>Delete Note</span>

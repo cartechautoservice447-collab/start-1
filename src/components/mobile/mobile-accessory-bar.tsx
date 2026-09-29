@@ -42,7 +42,7 @@ export function MobileAccessoryBar({
   };
 
   return (
-    <div className="md:hidden fixed bottom-[calc(0.5rem+env(safe-area-inset-bottom,0px))] inset-x-2.5 z-30 select-none transition-all duration-300">
+    <div className="md:hidden fixed bottom-[calc(0.5rem+env(safe-area-inset-bottom,0px))] inset-x-3 z-30 select-none transition-all duration-300">
       {collapsed ? (
         <div className="flex justify-end pr-2">
           <button
@@ -52,22 +52,22 @@ export function MobileAccessoryBar({
               haptic("light");
               setCollapsed(false);
             }}
-            className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/80 px-3 py-1.5 text-[0.65rem] font-bold text-muted-foreground backdrop-blur-xl shadow-lg active:scale-95 transition-all touch-manipulation cursor-pointer"
+            className="flex items-center gap-1.5 rounded-full border border-white/15 bg-black/80 px-4 py-2 text-xs font-bold text-muted-foreground backdrop-blur-xl shadow-lg active:scale-95 transition-all touch-manipulation cursor-pointer"
           >
-            <Sparkles className="h-3 w-3 text-primary" />
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
             <span>Format Tools</span>
-            <ChevronUp className="h-3 w-3" />
+            <ChevronUp className="h-3.5 w-3.5" />
           </button>
         </div>
       ) : (
-        <div className="glass-panel flex items-center justify-between gap-1 rounded-2xl border border-white/15 bg-black/80 p-1.5 shadow-2xl backdrop-blur-3xl">
-          <div className="flex items-center gap-1.5 overflow-x-auto scroll-sleek px-1 py-0.5">
+        <div className="glass-panel flex items-center justify-between gap-1.5 rounded-2xl border border-white/15 bg-black/80 p-2 shadow-2xl backdrop-blur-3xl">
+          <div className="flex items-center gap-2 overflow-x-auto scroll-sleek px-1.5 py-0.5">
             {/* H1 */}
             <button
               type="button"
               aria-label="Heading 1"
               onClick={() => handleWrap("# ", "", "Heading")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 text-xs font-bold font-mono shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 text-sm font-bold font-mono shrink-0 touch-manipulation cursor-pointer"
             >
               H1
             </button>
@@ -77,7 +77,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Heading 2"
               onClick={() => handleWrap("## ", "", "Subheading")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 text-xs font-bold font-mono shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 text-sm font-bold font-mono shrink-0 touch-manipulation cursor-pointer"
             >
               H2
             </button>
@@ -87,7 +87,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Bold"
               onClick={() => handleWrap("**", "**", "bold text")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <Bold className="h-4 w-4" />
             </button>
@@ -97,7 +97,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Italic"
               onClick={() => handleWrap("_", "_", "italic text")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <Italic className="h-4 w-4" />
             </button>
@@ -107,7 +107,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Inline Code"
               onClick={() => handleWrap("`", "`", "code")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <Code className="h-4 w-4" />
             </button>
@@ -117,7 +117,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Code Block"
               onClick={handleCodeBlock}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <SquareCode className="h-4 w-4" />
             </button>
@@ -127,7 +127,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Bullet list"
               onClick={() => handleWrap("- ", "", "Item")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <List className="h-4 w-4" />
             </button>
@@ -137,7 +137,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Task check"
               onClick={() => handleWrap("- [ ] ", "", "Task")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <CheckSquare className="h-4 w-4 text-emerald-400" />
             </button>
@@ -147,7 +147,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Quote"
               onClick={() => handleWrap("> ", "", "Quote")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <Quote className="h-4 w-4" />
             </button>
@@ -157,7 +157,7 @@ export function MobileAccessoryBar({
               type="button"
               aria-label="Link"
               onClick={() => handleWrap("[", "](https://)", "link text")}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:bg-white/[0.15] active:scale-90 shrink-0 touch-manipulation cursor-pointer"
             >
               <Link className="h-4 w-4" />
             </button>
@@ -171,7 +171,7 @@ export function MobileAccessoryBar({
               haptic("light");
               setCollapsed(true);
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:scale-90 shrink-0 ml-1 touch-manipulation cursor-pointer"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/[0.06] text-muted-foreground hover:text-foreground active:scale-90 shrink-0 ml-1.5 touch-manipulation cursor-pointer"
           >
             <ChevronDown className="h-4 w-4" />
           </button>

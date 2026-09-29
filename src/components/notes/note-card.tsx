@@ -39,14 +39,14 @@ export function NoteCard({
       }}
       style={{ animationDelay: `${Math.min(index, 10) * 35}ms` }}
       className={cn(
-        "group liquid-surface animate-card-in relative w-full cursor-pointer rounded-2xl border p-4 text-left transition-all duration-300 select-none",
+        "group liquid-surface animate-card-in relative w-full cursor-pointer rounded-[1.25rem] md:rounded-2xl border p-5 md:p-4 text-left transition-all duration-300 select-none",
         "border-white/5 bg-white/[0.03] hover:-translate-y-0.5 hover:scale-[1.015] hover:border-white/15 hover:bg-white/[0.06] active:scale-[0.985]",
         active &&
-          "border-primary/40 bg-white/[0.08] shadow-[0_10px_30px_-18px_rgba(0,0,0,0.9)] ring-1 ring-primary/30",
+          "border-primary/40 bg-white/[0.08] shadow-[0_10px_30px_-18px_rgba(0,0,0,0.9)] ring-1 ring-primary/30 max-md:shadow-[0_0_0_1px_hsl(var(--primary)/0.4),0_12px_32px_-16px_rgba(0,0,0,0.95)]",
       )}
     >
       <div className="flex items-start justify-between gap-2.5">
-        <h3 className="line-clamp-1 flex-1 text-sm font-semibold tracking-tight text-foreground">
+        <h3 className="line-clamp-1 flex-1 text-[0.95rem] md:text-sm font-semibold tracking-tight text-foreground">
           {note.title || "Untitled note"}
         </h3>
         
@@ -59,7 +59,7 @@ export function NoteCard({
               haptic("light");
               onToggleFavorite();
             }}
-            className="flex h-9 w-9 items-center justify-center shrink-0 rounded-xl text-muted-foreground transition-all hover:text-foreground hover:bg-white/[0.08] active:scale-90 touch-manipulation cursor-pointer"
+            className="flex h-10 w-10 md:h-9 md:w-9 items-center justify-center shrink-0 rounded-xl text-muted-foreground transition-all hover:text-foreground hover:bg-white/[0.08] active:scale-90 touch-manipulation cursor-pointer"
           >
             <Star
               className={cn(
@@ -87,11 +87,11 @@ export function NoteCard({
         </div>
       </div>
 
-      <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-muted-foreground">
+      <p className="mt-1.5 line-clamp-3 md:line-clamp-2 text-xs leading-5 text-muted-foreground">
         {snippet(note.body) || "Empty note"}
       </p>
 
-      <div className="mt-3.5 flex items-center justify-between text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground/70">
+      <div className="mt-3.5 flex items-center justify-between text-xs md:text-[0.68rem] uppercase tracking-[0.14em] text-muted-foreground/70">
         <div className="flex items-center gap-2">
           <span>{formatDate(note.updatedAt)}</span>
           {collectionName ? (

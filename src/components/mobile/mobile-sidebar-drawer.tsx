@@ -298,17 +298,17 @@ export function MobileSidebarDrawer({
         <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-14 rounded-full bg-white/30 pointer-events-none shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
 
         {/* Top Header: Pure Study Tools Interface */}
-        <div className="flex items-center justify-between p-3.5 pb-2.5 border-b border-white/10 shrink-0 bg-white/[0.02]">
-          <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-primary/30 to-purple-500/30 text-primary border border-primary/30 shadow-[0_0_12px_-2px_hsl(var(--primary)/0.5)]">
-              <Zap className="h-4 w-4 text-amber-300" />
+        <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-white/10 shrink-0 bg-white/[0.02]">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/30 to-purple-500/30 text-primary border border-primary/30 shadow-[0_0_16px_-2px_hsl(var(--primary)/0.5)]">
+              <Zap className="h-5 w-5 text-amber-300" />
             </span>
             <div>
-              <h2 className="text-sm font-bold tracking-tight text-foreground leading-tight">
+              <h2 className="text-[0.95rem] font-bold tracking-tight text-foreground leading-tight">
                 Study Tools &amp; Focus
               </h2>
-              <p className="text-[0.65rem] text-muted-foreground">
-                Zen Focus • MD Cheatsheet • Flashcards • Pomodoro
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Zen Focus • Flashcards • Pomodoro
               </p>
             </div>
           </div>
@@ -316,15 +316,15 @@ export function MobileSidebarDrawer({
           <button
             type="button"
             onClick={handleClose}
-            className="flex h-7 w-7 items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] text-muted-foreground hover:text-foreground active:scale-90 transition-all cursor-pointer"
+            className="flex h-9 w-9 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-muted-foreground hover:text-foreground active:scale-90 transition-all cursor-pointer"
             aria-label="Close tools menu"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Content: Study Tools Modules */}
-        <div className="flex-1 overflow-y-auto scroll-sleek p-2.5 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] space-y-2.5 min-h-0">
+        <div className="flex-1 overflow-y-auto scroll-sleek p-3.5 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] space-y-3 min-h-0">
           {/* Tool 1: Zen Focus */}
           {onToggleFocus && (
             <button
@@ -335,7 +335,7 @@ export function MobileSidebarDrawer({
                 onToggleFocus();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "hover:border-emerald-500/40 hover:bg-white/[0.06]",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-emerald-500/20 active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-emerald-500/50",
                 focusMode
@@ -346,7 +346,7 @@ export function MobileSidebarDrawer({
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
                 <div
                   className={cn(
-                    "flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 group-active:scale-90",
+                    "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition-all duration-200 group-active:scale-90",
                     focusMode
                       ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-400"
                       : "border-emerald-500/30 bg-emerald-500/15 text-emerald-400"
@@ -366,7 +366,7 @@ export function MobileSidebarDrawer({
                       </span>
                     )}
                   </div>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     Distraction-free edge-to-edge writing
                   </p>
                 </div>
@@ -398,13 +398,13 @@ export function MobileSidebarDrawer({
                 onOpenCheatsheet();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "border-cyan-500/20 bg-cyan-500/10 hover:border-cyan-500/40 hover:bg-cyan-500/15",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-cyan-500/20 active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-cyan-400/50"
               )}
             >
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/15 text-cyan-400 transition-all duration-200 group-active:scale-90">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-500/15 text-cyan-400 transition-all duration-200 group-active:scale-90">
                   <FileText className="h-4 w-4" />
                 </div>
 
@@ -417,7 +417,7 @@ export function MobileSidebarDrawer({
                       Syntax
                     </span>
                   </div>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     Markdown code, tables, math &amp; task lists
                   </p>
                 </div>
@@ -437,13 +437,13 @@ export function MobileSidebarDrawer({
                 onOpenFlashcards();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "border-purple-500/20 bg-purple-500/10 hover:border-purple-500/40 hover:bg-purple-500/15",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-purple-500/25 active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-purple-400/60"
               )}
             >
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-purple-500/30 bg-purple-500/20 text-purple-300 transition-all duration-200 group-active:scale-90">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-purple-500/30 bg-purple-500/20 text-purple-300 transition-all duration-200 group-active:scale-90">
                   <Brain className="h-4 w-4" />
                 </div>
 
@@ -456,7 +456,7 @@ export function MobileSidebarDrawer({
                       AI ✨
                     </span>
                   </div>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     FSRS spaced repetition &amp; recall review
                   </p>
                 </div>
@@ -476,7 +476,7 @@ export function MobileSidebarDrawer({
                 onOpenPomodoro();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "hover:border-primary/40 hover:bg-white/[0.06]",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-primary/20 active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-primary/50",
                 pomodoroRunning
@@ -487,7 +487,7 @@ export function MobileSidebarDrawer({
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
                 <div
                   className={cn(
-                    "flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border transition-all duration-200 group-active:scale-90",
+                    "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border transition-all duration-200 group-active:scale-90",
                     pomodoroRunning
                       ? "border-primary/50 bg-primary/20 text-primary animate-pulse"
                       : "border-primary/30 bg-primary/15 text-primary"
@@ -507,7 +507,7 @@ export function MobileSidebarDrawer({
                       </span>
                     )}
                   </div>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     {todayMinutes}m focused • Timer &amp; soundscapes
                   </p>
                 </div>
@@ -544,26 +544,26 @@ export function MobileSidebarDrawer({
                   onOpenExamSimulator();
                 }}
                 className={cn(
-                  "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                  "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                   "border-amber-500/25 bg-amber-500/10 hover:border-amber-500/50 hover:bg-amber-500/15",
                   "active:scale-[0.96] active:translate-y-0.5 active:bg-amber-500/25 active:border-amber-400"
                 )}
               >
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-amber-500/40 bg-amber-500/20 text-amber-300 transition-all duration-200 group-active:scale-90 shadow-[0_0_12px_rgba(245,158,11,0.25)]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-amber-500/40 bg-amber-500/20 text-amber-300 transition-all duration-200 group-active:scale-90 shadow-[0_0_12px_rgba(245,158,11,0.25)]">
                     <Target className="h-4 w-4" />
                   </div>
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <h4 className="text-xs font-bold text-foreground truncate">
+                      <h4 className="text-sm font-bold text-foreground truncate">
                         AI Exam Simulator
                       </h4>
                       <span className="rounded-full bg-amber-500/25 px-1.5 py-0.2 text-[0.58rem] font-bold text-amber-300">
                         Diagnostic
                       </span>
                     </div>
-                    <p className="text-[0.65rem] text-muted-foreground truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       Timed mock drills, scoring &amp; blindspot audit
                     </p>
                   </div>
@@ -583,26 +583,26 @@ export function MobileSidebarDrawer({
                   onOpenNotePolisher();
                 }}
                 className={cn(
-                  "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                  "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                   "border-cyan-500/25 bg-cyan-500/10 hover:border-cyan-500/50 hover:bg-cyan-500/15",
                   "active:scale-[0.96] active:translate-y-0.5 active:bg-cyan-500/25 active:border-cyan-400"
                 )}
               >
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 transition-all duration-200 group-active:scale-90 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/40 bg-cyan-500/20 text-cyan-300 transition-all duration-200 group-active:scale-90 shadow-[0_0_12px_rgba(6,182,212,0.25)]">
                     <Wand2 className="h-4 w-4" />
                   </div>
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
-                      <h4 className="text-xs font-bold text-foreground truncate">
+                      <h4 className="text-sm font-bold text-foreground truncate">
                         AI Note Polisher &amp; Code
                       </h4>
                       <span className="rounded-full bg-cyan-500/25 px-1.5 py-0.2 text-[0.58rem] font-bold text-cyan-300">
                         Enhance
                       </span>
                     </div>
-                    <p className="text-[0.65rem] text-muted-foreground truncate">
+                    <p className="text-xs text-muted-foreground truncate">
                       Study guide format, code debug &amp; mnemonics
                     </p>
                   </div>
@@ -623,13 +623,13 @@ export function MobileSidebarDrawer({
                 onNavigateDailyGoal();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "border-sky-500/20 bg-sky-500/10 hover:border-sky-500/40 hover:bg-sky-500/15",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-sky-500/25 active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-sky-400/60"
               )}
             >
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-sky-500/30 bg-sky-500/20 text-sky-400 transition-all duration-200 group-active:scale-90">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-500/30 bg-sky-500/20 text-sky-400 transition-all duration-200 group-active:scale-90">
                   <Target className="h-4 w-4" />
                 </div>
 
@@ -642,7 +642,7 @@ export function MobileSidebarDrawer({
                       {goalPercent}%
                     </span>
                   </div>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     {todayMinutes}m of {dailyGoalHours * 60}m target
                   </p>
                 </div>
@@ -662,13 +662,13 @@ export function MobileSidebarDrawer({
                 onOpenCheatsheet();
               }}
               className={cn(
-                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 text-left transition-all duration-200 ease-out cursor-pointer",
+                "glass-panel group w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-3.5 text-left transition-all duration-200 ease-out cursor-pointer",
                 "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]",
                 "active:scale-[0.96] active:translate-y-0.5 active:bg-white/[0.1] active:shadow-[inset_0_2px_8px_rgba(0,0,0,0.5)] active:border-white/30"
               )}
             >
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                <div className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/15 text-cyan-400 transition-all duration-200 group-active:scale-90">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-500/15 text-cyan-400 transition-all duration-200 group-active:scale-90">
                   <FileText className="h-4 w-4" />
                 </div>
 
@@ -676,7 +676,7 @@ export function MobileSidebarDrawer({
                   <h4 className="text-xs font-bold text-foreground truncate">
                     Markdown Cheatsheet
                   </h4>
-                  <p className="text-[0.65rem] text-muted-foreground truncate">
+                  <p className="text-xs text-muted-foreground truncate">
                     Syntax, code &amp; task lists
                   </p>
                 </div>
@@ -687,15 +687,15 @@ export function MobileSidebarDrawer({
           )}
 
           {/* Option 6: Liquid Glass Physics & Quick Themes */}
-          <div className="glass-panel rounded-2xl border border-white/10 bg-white/[0.03] p-2.5 space-y-2">
+          <div className="glass-panel rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0">
-                <div className="flex h-6.5 w-6.5 shrink-0 items-center justify-center rounded-lg border border-cyan-500/30 bg-cyan-500/15 text-cyan-400">
-                  <Droplets className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/15 text-cyan-400">
+                  <Droplets className="h-4 w-4" />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-foreground truncate">Liquid Glass</h4>
-                  <p className="text-[0.6rem] text-muted-foreground truncate">Refraction &amp; bounce</p>
+                  <h4 className="text-sm font-bold text-foreground truncate">Liquid Glass</h4>
+                  <p className="text-xs text-muted-foreground truncate">Refraction &amp; bounce</p>
                 </div>
               </div>
 
@@ -706,7 +706,7 @@ export function MobileSidebarDrawer({
                   update({ liquidGlassEnabled: !settings.liquidGlassEnabled });
                 }}
                 className={cn(
-                  "rounded-xl px-2 py-0.5 text-[0.65rem] font-bold transition-all duration-200 cursor-pointer active:scale-90",
+                  "rounded-xl px-3 py-1.5 text-xs font-bold transition-all duration-200 cursor-pointer active:scale-90",
                   settings.liquidGlassEnabled
                     ? "bg-primary text-primary-foreground shadow-sm"
                     : "border border-white/10 bg-white/[0.05] text-muted-foreground"
@@ -717,7 +717,7 @@ export function MobileSidebarDrawer({
             </div>
 
             {/* Theme Selector */}
-            <div className="grid grid-cols-3 gap-1 rounded-xl border border-white/10 bg-white/[0.03] p-0.5">
+            <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-white/10 bg-white/[0.03] p-1">
               <button
                 type="button"
                 onClick={() => {
@@ -725,7 +725,7 @@ export function MobileSidebarDrawer({
                   update({ theme: "original" });
                 }}
                 className={cn(
-                  "flex items-center justify-center gap-1 rounded-lg py-1 text-[0.65rem] font-medium transition-all cursor-pointer active:scale-95",
+                  "flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all cursor-pointer active:scale-95",
                   settings.theme === "original"
                     ? "bg-white/[0.12] text-foreground font-bold shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
@@ -741,7 +741,7 @@ export function MobileSidebarDrawer({
                   update({ theme: "dark" });
                 }}
                 className={cn(
-                  "flex items-center justify-center gap-1 rounded-lg py-1 text-[0.65rem] font-medium transition-all cursor-pointer active:scale-95",
+                  "flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all cursor-pointer active:scale-95",
                   settings.theme === "dark"
                     ? "bg-white/[0.12] text-foreground font-bold shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
@@ -757,7 +757,7 @@ export function MobileSidebarDrawer({
                   update({ theme: "light" });
                 }}
                 className={cn(
-                  "flex items-center justify-center gap-1 rounded-lg py-1 text-[0.65rem] font-medium transition-all cursor-pointer active:scale-95",
+                  "flex items-center justify-center gap-1.5 rounded-lg py-2 text-xs font-medium transition-all cursor-pointer active:scale-95",
                   settings.theme === "light"
                     ? "bg-white/[0.12] text-foreground font-bold shadow-sm"
                     : "text-muted-foreground hover:text-foreground"
@@ -770,7 +770,7 @@ export function MobileSidebarDrawer({
           </div>
 
           {/* Bottom Actions: New Course & Settings */}
-          <div className="grid grid-cols-2 gap-2 pt-0.5">
+          <div className="grid grid-cols-2 gap-3 pt-1">
             {onOpenNewCourse && (
               <button
                 type="button"
@@ -779,9 +779,9 @@ export function MobileSidebarDrawer({
                   onOpenChange(false);
                   onOpenNewCourse();
                 }}
-                className="glass-panel flex items-center justify-center gap-1.5 rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-xs font-bold text-foreground active:scale-95 transition-all hover:bg-white/[0.08] cursor-pointer"
+                className="glass-panel flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 text-sm font-bold text-foreground active:scale-95 transition-all hover:bg-white/[0.08] cursor-pointer"
               >
-                <FolderPlus className="h-3.5 w-3.5 text-primary" />
+                <FolderPlus className="h-4 w-4 text-primary" />
                 <span>+ Course</span>
               </button>
             )}
@@ -794,9 +794,9 @@ export function MobileSidebarDrawer({
                   onOpenChange(false);
                   onOpenSettings();
                 }}
-                className="glass-panel flex items-center justify-center gap-1.5 rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-xs font-bold text-foreground active:scale-95 transition-all hover:bg-white/[0.08] cursor-pointer"
+                className="glass-panel flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 text-sm font-bold text-foreground active:scale-95 transition-all hover:bg-white/[0.08] cursor-pointer"
               >
-                <Sliders className="h-3.5 w-3.5 text-purple-400" />
+                <Sliders className="h-4 w-4 text-purple-400" />
                 <span>Settings</span>
               </button>
             )}
@@ -811,9 +811,9 @@ export function MobileSidebarDrawer({
                 onOpenChange(false);
                 void signOut();
               }}
-              className="w-full flex items-center justify-center gap-1.5 rounded-2xl border border-rose-500/20 bg-rose-500/10 p-2 text-xs font-semibold text-rose-400 hover:bg-rose-500/20 active:scale-95 transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 rounded-2xl border border-rose-500/20 bg-rose-500/10 p-3 text-sm font-semibold text-rose-400 hover:bg-rose-500/20 active:scale-95 transition-all cursor-pointer"
             >
-              <LogOut className="h-3.5 w-3.5" />
+              <LogOut className="h-4 w-4" />
               <span>Log Out ({user.email?.split("@")[0] || "Account"})</span>
             </button>
           )}

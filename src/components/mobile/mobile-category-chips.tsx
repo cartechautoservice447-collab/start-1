@@ -18,7 +18,7 @@ export function MobileCategoryChips({
   counts,
 }: Props) {
   return (
-    <div className="md:hidden flex items-center gap-1.5 overflow-x-auto px-2.5 pb-2 pt-1 scroll-sleek select-none border-t border-white/5 mt-0.5">
+    <div className="md:hidden flex items-center gap-2 overflow-x-auto px-3 pb-2.5 pt-1.5 scroll-sleek select-none border-t border-white/5 mt-0.5">
       {/* Chip 1: All Notes */}
       <button
         type="button"
@@ -27,7 +27,7 @@ export function MobileCategoryChips({
           onFilterChange({ kind: "all" });
         }}
         className={cn(
-          "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
+          "flex items-center gap-2 rounded-full px-4 py-2 text-[0.8rem] font-semibold shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
           filter.kind === "all"
             ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
             : "border border-white/10 bg-white/[0.04] text-muted-foreground hover:text-foreground hover:bg-white/[0.08]",
@@ -35,7 +35,7 @@ export function MobileCategoryChips({
       >
         <Layers className="h-3.5 w-3.5" />
         <span>All</span>
-        <span className="opacity-75 font-mono text-[0.65rem]">{counts.all}</span>
+        <span className="opacity-75 font-mono text-[0.7rem]">{counts.all}</span>
       </button>
 
       {/* Chip 2: Favorites */}
@@ -46,7 +46,7 @@ export function MobileCategoryChips({
           onFilterChange({ kind: "favorites" });
         }}
         className={cn(
-          "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
+          "flex items-center gap-2 rounded-full px-4 py-2 text-[0.8rem] font-semibold shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
           filter.kind === "favorites"
             ? "bg-yellow-400 text-black shadow-md font-bold shadow-yellow-400/20"
             : "border border-white/10 bg-white/[0.04] text-muted-foreground hover:text-foreground hover:bg-white/[0.08]",
@@ -54,7 +54,7 @@ export function MobileCategoryChips({
       >
         <Star className={cn("h-3.5 w-3.5", filter.kind === "favorites" ? "fill-black" : "text-yellow-400")} />
         <span>Starred</span>
-        <span className="opacity-75 font-mono text-[0.65rem]">{counts.favorites}</span>
+        <span className="opacity-75 font-mono text-[0.7rem]">{counts.favorites}</span>
       </button>
 
       {/* Dynamic Sub-collections */}
@@ -70,16 +70,16 @@ export function MobileCategoryChips({
               onFilterChange({ kind: "collection", id: c.id });
             }}
             className={cn(
-              "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
+              "flex items-center gap-2 rounded-full px-4 py-2 text-[0.8rem] font-medium shrink-0 transition-all duration-200 active:scale-95 touch-manipulation cursor-pointer",
               active
                 ? "bg-white/[0.18] text-foreground border border-white/20 shadow-md font-semibold"
                 : "border border-white/10 bg-white/[0.04] text-muted-foreground hover:text-foreground hover:bg-white/[0.08]",
             )}
           >
             <Folder className="h-3.5 w-3.5 opacity-70" />
-            <span className="truncate max-w-[120px]">{c.name}</span>
+            <span className="truncate max-w-[140px]">{c.name}</span>
             {count > 0 ? (
-              <span className="opacity-75 font-mono text-[0.65rem]">{count}</span>
+              <span className="opacity-75 font-mono text-[0.7rem]">{count}</span>
             ) : null}
           </button>
         );

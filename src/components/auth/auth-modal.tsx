@@ -22,7 +22,7 @@ function Field({
 }) {
   return (
     <label className="block space-y-1.5">
-      <span className="text-[0.68rem] uppercase tracking-[0.22em] text-muted-foreground/80">
+      <span className="text-[0.72rem] uppercase tracking-[0.22em] text-muted-foreground/80">
         {label}
       </span>
       <input
@@ -31,7 +31,7 @@ function Field({
         autoComplete={autoComplete ?? ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder ?? ""}
-        className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-white/20 focus:outline-none"
+        className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-white/20 focus:outline-none"
       />
     </label>
   );
@@ -136,16 +136,16 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
   };
 
   return (
-    <div className="app-backdrop relative flex min-h-screen w-full items-center justify-center overflow-hidden p-4">
+    <div className="app-backdrop relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-6 sm:py-8">
       <div className="grain-overlay pointer-events-none absolute inset-0" />
-      <div className="glass-panel animate-panel-in relative w-full max-w-[390px] rounded-3xl border border-white/10 p-6 sm:p-7 shadow-2xl backdrop-blur-2xl">
+      <div className="glass-panel animate-panel-in relative w-full max-w-[390px] rounded-3xl border border-white/10 p-7 sm:p-8 shadow-2xl backdrop-blur-2xl">
         <div className="text-center">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-0.5 text-[0.68rem] uppercase tracking-[0.25em] text-primary font-medium">
             <Sparkles className="h-3 w-3" />
             Glass Workspace
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">NewLumino</h1>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <h1 className="mt-2 text-3xl md:text-2xl font-bold tracking-tight text-foreground">NewLumino</h1>
+          <p className="mt-1 text-sm text-muted-foreground/80">
             Liquid Glass notes &amp; course workspace synchronized with Fluid Glass Studio
           </p>
         </div>
@@ -160,7 +160,7 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
           type="button"
           onClick={google}
           disabled={busy}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2.5 text-sm font-medium text-foreground transition-all duration-200 hover:bg-white/[0.1] active:scale-[0.99] disabled:opacity-60"
+          className="mt-5 flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/[0.06] px-3 py-3.5 text-[0.95rem] font-medium text-foreground transition-all duration-200 hover:bg-white/[0.1] active:scale-[0.99] disabled:opacity-60"
         >
           <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
             <path fill="#EA4335" d="M12 10.2v3.9h5.5a4.7 4.7 0 0 1-2 3.1l3.2 2.5c1.9-1.7 3-4.3 3-7.3 0-.7-.1-1.4-.2-2H12Z" />
@@ -171,7 +171,7 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
           Continue with Google
         </button>
 
-        <div className="my-4 grid grid-cols-2 gap-1.5 rounded-xl border border-white/5 bg-white/[0.03] p-1">
+        <div className="my-4 grid grid-cols-2 gap-2 rounded-2xl border border-white/5 bg-white/[0.03] p-1.5">
           {(["login", "signup"] as Tab[]).map((t) => (
             <button
               key={t}
@@ -181,7 +181,7 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
                 setError(null);
               }}
               className={cn(
-                "rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all duration-200",
+                "rounded-xl px-2.5 py-2 text-sm font-medium transition-all duration-200",
                 tab === t ? "bg-white/[0.12] text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
               )}
             >
@@ -208,7 +208,7 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
           ) : null}
 
           {error ? (
-            <div className="flex items-start gap-2 rounded-xl border border-destructive/40 bg-destructive/15 px-3 py-2 text-xs text-destructive-foreground">
+            <div className="flex items-start gap-2 rounded-2xl border border-destructive/40 bg-destructive/15 px-3 py-2 text-[0.8rem] text-destructive-foreground">
               <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-destructive" />
               <span className="text-red-300">{error}</span>
             </div>
@@ -217,7 +217,7 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
           <button
             type="submit"
             disabled={busy}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-primary px-3 py-2.5 text-sm font-semibold text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-primary px-3 py-3.5 text-[0.95rem] font-semibold text-primary-foreground shadow-lg transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
           >
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {tab === "signup" ? "Create account" : "Log in"}
@@ -225,11 +225,11 @@ export function AuthModal({ onGuestAccess }: { onGuestAccess?: () => void }) {
         </form>
 
         {onGuestAccess ? (
-          <div className="mt-4 pt-3 border-t border-white/5 text-center">
+          <div className="mt-5 pt-3 border-t border-white/5 text-center">
             <button
               type="button"
               onClick={onGuestAccess}
-              className="text-xs text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
             >
               Continue as Guest (Local Workspace)
             </button>
