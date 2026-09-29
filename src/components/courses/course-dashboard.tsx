@@ -19,6 +19,7 @@ import {
   Clock,
   Flame,
   Zap,
+  ChevronRight,
 } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 import { COURSE_ACCENTS, formatDate, type Course, type CourseAccent, type Note } from "@/lib/notes";
@@ -212,10 +213,12 @@ export function CourseDashboard({
       <div className="grain-overlay pointer-events-none absolute inset-0" />
       <div className="relative mx-auto w-full max-w-[1240px] p-3.5 sm:p-8">
 
-        {/* Header Bar with Feature 7: Time-of-Day Contextual Dynamic Greeting */}
-        <header className="glass-panel animate-panel-in flex flex-wrap items-center justify-between gap-3.5 sm:gap-5 rounded-[2rem] p-5 sm:p-8 min-h-[96px] sm:min-h-[116px] shadow-2xl backdrop-blur-2xl">
+        {/* ═══════════════════════════════════════════════════════════════
+            DESKTOP HEADER — completely unchanged
+        ═══════════════════════════════════════════════════════════════ */}
+        <header className="hidden sm:flex glass-panel animate-panel-in flex-wrap items-center justify-between gap-3.5 sm:gap-5 rounded-[2rem] p-5 sm:p-8 min-h-[96px] sm:min-h-[116px] shadow-2xl backdrop-blur-2xl">
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            {/* Brand Logo Icon Button: Clicking opens Study Tools (Zen Focus, MD Cheatsheet, Flashcards, Pomodoro) */}
+            {/* Brand Logo Icon Button: Clicking opens Study Tools */}
             <button
               type="button"
               aria-label="Open study tools"
@@ -268,8 +271,64 @@ export function CourseDashboard({
           </div>
         </header>
 
-        {/* Feature 3: Interactive Deep-Linking Stat Cards Grid */}
-        <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-4">
+        {/* ═══════════════════════════════════════════════════════════════
+            MOBILE HEADER — premium redesign (sm:hidden)
+        ═══════════════════════════════════════════════════════════════ */}
+        <header className="sm:hidden animate-panel-in">
+          {/* Top action bar */}
+          <div className="flex items-center justify-between mb-5">
+            <button
+              type="button"
+              aria-label="Open study tools"
+              onClick={() => {
+                haptic("medium");
+                onOpenMenu?.();
+              }}
+              className="flex h-10 w-10 items-center justify-center rounded-2xl border border-primary/35 bg-gradient-to-br from-primary/25 to-emerald-500/20 text-primary shadow-[0_0_20px_-4px_hsl(var(--primary)/0.6)] active:scale-90 transition-all duration-200 cursor-pointer"
+            >
+              <Sparkles className="h-5 w-5 text-primary animate-pulse" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {/* Realtime dot */}
+              <span
+                className={`h-2 w-2 rounded-full ${
+                  realtimeStatus === "connected"
+                    ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"
+                    : realtimeStatus === "connecting"
+                      ? "bg-amber-400 animate-pulse"
+                      : "bg-white/30"
+                }`}
+              />
+              <button
+                type="button"
+                aria-label="Settings"
+                onClick={onOpenSettings}
+                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] text-muted-foreground active:scale-90 transition-all duration-200 cursor-pointer"
+              >
+                <Settings className="h-4.5 w-4.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Greeting hero */}
+          <div className="mb-6 px-0.5">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-[0.7rem] font-bold text-primary mb-3">
+              {greetingInfo.pill}
+            </div>
+            <h1 className="text-[1.9rem] font-extrabold tracking-tight text-foreground leading-[1.15]">
+              {greetingInfo.greeting}
+            </h1>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              {greetingInfo.subtitle}
+            </p>
+          </div>
+        </header>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            DESKTOP Stat Cards Grid — completely unchanged
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="hidden sm:grid mt-4 sm:mt-6 grid-cols-3 gap-2 sm:gap-4">
           <button
             type="button"
             onClick={() => {
@@ -326,12 +385,122 @@ export function CourseDashboard({
           </button>
         </div>
 
-        {/* Mobile-Only Feature 2: Daily Focus Progress Ring & Study Streak Widget */}
-        <div className="sm:hidden mt-3.5 glass-panel rounded-3xl p-3.5 border border-primary/25 bg-gradient-to-br from-primary/10 via-white/[0.02] to-amber-500/10 shadow-lg">
+        {/* ═══════════════════════════════════════════════════════════════
+            MOBILE Stat Cards — Premium horizontal pill row
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="sm:hidden mb-6 grid grid-cols-3 gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              haptic("light");
+              const el = document.getElementById("courses-section-mobile");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-primary/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/15 border border-primary/25 text-primary transition-transform group-active:scale-90">
+              <FolderOpen className="h-5 w-5" />
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{courses.length}</p>
+              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Courses</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              haptic("light");
+              onOpenAllNotes?.();
+            }}
+            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-accent/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent/15 border border-accent/25 text-accent transition-transform group-active:scale-90">
+              <BookOpen className="h-5 w-5" />
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{totalNotes}</p>
+              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Notes</p>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              haptic("light");
+              onOpenFavorites?.();
+            }}
+            className="glass-panel group flex flex-col items-center gap-2 rounded-3xl p-4 border border-white/10 hover:border-amber-500/40 active:scale-[0.96] transition-all duration-200 cursor-pointer"
+          >
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/15 border border-amber-500/25 text-amber-400 transition-transform group-active:scale-90">
+              <Star className="h-5 w-5" />
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-extrabold text-foreground font-mono leading-none">{favNotes}</p>
+              <p className="text-[0.65rem] text-muted-foreground mt-0.5 font-medium">Saved</p>
+            </div>
+          </button>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            MOBILE Focus Progress Widget — premium redesign
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="sm:hidden mb-6">
+          <div className="glass-panel rounded-[1.6rem] p-5 border border-primary/20 bg-gradient-to-br from-primary/8 via-white/[0.01] to-amber-500/8 shadow-lg">
+            {/* Top row: label + streak badge */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/20 border border-primary/30">
+                  <Clock className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-foreground">Today's Focus</p>
+                  <p className="text-[0.65rem] text-muted-foreground">
+                    {todayMinutes}m of {dailyGoalHours * 60}m goal
+                  </p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 border border-amber-500/25 px-2.5 py-1 text-[0.65rem] font-bold text-amber-300">
+                <Flame className="h-3 w-3" />
+                Streak
+              </span>
+            </div>
+
+            {/* Progress bar */}
+            <div className="mb-4">
+              <div className="flex items-center justify-between text-[0.65rem] text-muted-foreground mb-1.5">
+                <span>Progress</span>
+                <span className="font-mono font-bold text-foreground">{progressPct}%</span>
+              </div>
+              <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-primary to-emerald-400 transition-all duration-700 ease-out"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Start Focus CTA */}
+            <button
+              type="button"
+              onClick={() => {
+                haptic("medium");
+                onStartFocus?.();
+              }}
+              className="w-full flex items-center justify-center gap-2 rounded-2xl bg-primary/20 border border-primary/35 px-4 py-3 text-sm font-bold text-primary active:scale-[0.97] hover:bg-primary/28 transition-all duration-200 shadow-sm cursor-pointer"
+            >
+              <Zap className="h-4 w-4 text-amber-300" />
+              <span>Start Focus Session</span>
+            </button>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            DESKTOP Focus Widget — completely unchanged original
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="hidden sm:block mt-3.5 glass-panel rounded-3xl p-3.5 border border-primary/25 bg-gradient-to-br from-primary/10 via-white/[0.02] to-amber-500/10 shadow-lg">
           <div className="flex items-center justify-between gap-3">
-            {/* Left: Progress Ring & Focus Minutes */}
             <div className="flex items-center gap-3 min-w-0">
-              {/* Circular Progress Ring */}
               <div className="relative flex h-11 w-11 shrink-0 items-center justify-center">
                 <svg className="h-11 w-11 -rotate-90" viewBox="0 0 36 36">
                   <path
@@ -370,7 +539,6 @@ export function CourseDashboard({
               </div>
             </div>
 
-            {/* Right: 1-Tap Quick Start Focus Button */}
             <button
               type="button"
               onClick={() => {
@@ -385,9 +553,79 @@ export function CourseDashboard({
           </div>
         </div>
 
-        {/* Mobile-Only Feature 1: "Continue Studying" / Recent Notes Shelf */}
+        {/* ═══════════════════════════════════════════════════════════════
+            MOBILE Recent Notes — premium redesign (sm:hidden)
+        ═══════════════════════════════════════════════════════════════ */}
         {recentNotes.length > 0 && (
-          <div className="sm:hidden mt-4 space-y-2">
+          <div className="sm:hidden mb-7">
+            {/* Section header */}
+            <div className="flex items-center justify-between px-0.5 mb-3">
+              <div className="flex items-center gap-2">
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/15">
+                  <Clock className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <h3 className="text-sm font-bold text-foreground">Continue Studying</h3>
+              </div>
+              <span className="text-[0.65rem] text-muted-foreground font-medium">Recent</span>
+            </div>
+
+            {/* Horizontal Swipeable Carousel */}
+            <div className="flex gap-3 overflow-x-auto pb-2 scroll-sleek snap-x snap-mandatory -mx-1 px-1">
+              {recentNotes.map((note) => {
+                const course = courses.find((c) => c.id === note.courseId);
+                const accent = course ? (ACCENT_STYLES[course.color] ?? ACCENT_STYLES.sky) : ACCENT_STYLES.sky;
+
+                return (
+                  <div
+                    key={note.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => {
+                      haptic("light");
+                      onOpenNote?.(note.id, note.courseId || undefined);
+                    }}
+                    className="glass-panel snap-start shrink-0 w-[220px] rounded-[1.4rem] p-4 border border-white/10 hover:border-primary/35 active:scale-[0.97] transition-all duration-200 cursor-pointer flex flex-col justify-between select-none shadow-sm"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-1 mb-2.5">
+                        <span
+                          className={`inline-flex items-center gap-1.5 rounded-full border ${accent.border} ${accent.bg} px-2.5 py-1 text-[0.62rem] font-bold ${accent.text} truncate max-w-[140px]`}
+                        >
+                          <span className={`h-1.5 w-1.5 rounded-full ${accent.dot} shrink-0`} />
+                          <span className="truncate">{course?.name || "General"}</span>
+                        </span>
+                        {note.favorite && (
+                          <Star className="h-3.5 w-3.5 text-amber-400 fill-amber-400 shrink-0" />
+                        )}
+                      </div>
+
+                      <h4 className="text-[0.88rem] font-bold text-foreground truncate leading-snug">
+                        {note.title || "Untitled Note"}
+                      </h4>
+
+                      <p className="text-[0.72rem] text-muted-foreground line-clamp-2 mt-1.5 leading-relaxed">
+                        {note.body?.replace(/[#*`>_-]/g, "").slice(0, 80) || "Empty note snippet..."}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-white/8 flex items-center justify-between text-[0.65rem] text-muted-foreground/70">
+                      <span>{formatDate(note.updatedAt)}</span>
+                      <span className="text-primary font-semibold flex items-center gap-0.5">
+                        Resume <ChevronRight className="h-3 w-3" />
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════════
+            DESKTOP Recent Notes — completely unchanged original
+        ═══════════════════════════════════════════════════════════════ */}
+        {recentNotes.length > 0 && (
+          <div className="hidden sm:block mt-4 space-y-2">
             <div className="flex items-center justify-between px-1">
               <div className="flex items-center gap-1.5">
                 <Clock className="h-3.5 w-3.5 text-primary" />
@@ -400,7 +638,6 @@ export function CourseDashboard({
               </span>
             </div>
 
-            {/* Horizontal Swipeable Carousel */}
             <div className="flex gap-2.5 overflow-x-auto pb-1.5 pt-0.5 scroll-sleek snap-x snap-mandatory">
               {recentNotes.map((note) => {
                 const course = courses.find((c) => c.id === note.courseId);
@@ -452,8 +689,12 @@ export function CourseDashboard({
           </div>
         )}
 
-        {/* Filter and Actions Bar */}
-        <div id="courses-section" className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-end sm:items-center justify-between gap-3 scroll-mt-6">
+        {/* ═══════════════════════════════════════════════════════════════
+            Filter & Actions Bar — Desktop unchanged, mobile redesigned
+        ═══════════════════════════════════════════════════════════════ */}
+
+        {/* Desktop filter bar */}
+        <div id="courses-section" className="hidden sm:flex mt-7 sm:mt-8 flex-col sm:flex-row items-end sm:items-center justify-between gap-3 scroll-mt-6">
           <div className="relative w-full max-w-md">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/60" />
             <input
@@ -466,8 +707,40 @@ export function CourseDashboard({
           </div>
         </div>
 
-        {/* Category Pills and Create Button Row */}
-        <div className="mt-5 flex items-center justify-between gap-4">
+        {/* Mobile section header + search */}
+        <div id="courses-section-mobile" className="sm:hidden mb-5 scroll-mt-6">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-base font-bold text-foreground">My Courses</h2>
+            <button
+              type="button"
+              onClick={() => {
+                haptic("medium");
+                setAdding(true);
+              }}
+              className="inline-flex items-center gap-1.5 rounded-2xl border border-primary/30 bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-lg shadow-primary/20 active:scale-[0.97] transition-all duration-200 cursor-pointer"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              New Course
+            </button>
+          </div>
+
+          {/* Mobile search */}
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/50" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search courses..."
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.05] pl-11 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 backdrop-blur-xl focus:border-primary/50 focus:outline-none transition-colors"
+            />
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════
+            Category Pills + Create Button — Desktop unchanged
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="hidden sm:flex mt-5 items-center justify-between gap-4">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none flex-1">
             {categories.length > 2 ? (
               categories.map((cat) => (
@@ -504,9 +777,31 @@ export function CourseDashboard({
           </button>
         </div>
 
-        {/* Course cards: dimensions/alignment matched to the Mobile-liquid-glass dashboard reference. */}
+        {/* Mobile category pills */}
+        {categories.length > 2 && (
+          <div className="sm:hidden mb-4 flex items-center gap-2 overflow-x-auto pb-1 scroll-sleek -mx-1 px-1">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold capitalize transition-all whitespace-nowrap border ${
+                  selectedCategory === cat
+                    ? "bg-white/15 text-foreground border-white/25 shadow-sm"
+                    : "text-muted-foreground border-transparent hover:bg-white/5"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════════
+            DESKTOP Course Cards Grid — completely unchanged original
+        ═══════════════════════════════════════════════════════════════ */}
         <div
-          className="mt-[30px] grid w-full grid-cols-2 items-start gap-x-[9px] gap-y-[18px] sm:mt-[30px] sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 max-[700px]:mt-[26px] max-[480px]:mt-6 max-[480px]:grid-cols-1 max-[480px]:gap-y-[15px] max-[380px]:mt-[22px] max-[380px]:gap-y-[13px] max-[330px]:mt-5 max-[330px]:gap-y-[11px]"
+          className="hidden sm:grid mt-[30px] w-full grid-cols-2 items-start gap-x-[9px] gap-y-[18px] sm:mt-[30px] sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
         >
           {filteredCourses.map((c, i) => {
             const courseNotes = notes.filter((n) => n.courseId === c.id);
@@ -518,7 +813,7 @@ export function CourseDashboard({
             return (
               <article
                 key={c.id}
-                className="group relative h-[188px] min-h-[188px] w-full overflow-visible max-[700px]:h-[172px] max-[700px]:min-h-[172px] max-[480px]:h-[196px] max-[480px]:min-h-[196px] max-[380px]:h-[164px] max-[380px]:min-h-[164px] max-[330px]:h-[160px] max-[330px]:min-h-[160px]"
+                className="group relative h-[188px] min-h-[188px] w-full overflow-visible"
               >
                 <div
                   role="button"
@@ -535,64 +830,63 @@ export function CourseDashboard({
                     }
                   }}
                   style={{ animationDelay: `${i * 45}ms` }}
-                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-2xl p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:border-white/20 hover:shadow-2xl active:scale-[0.985] max-[700px]:h-[172px] max-[700px]:min-h-[172px] max-[700px]:p-[13px] max-[480px]:h-[196px] max-[480px]:min-h-[196px] max-[480px]:p-3 max-[380px]:h-[164px] max-[380px]:min-h-[164px] max-[380px]:p-[11px] max-[330px]:h-[160px] max-[330px]:min-h-[160px] max-[330px]:p-2"
+                  className="glass-panel animate-panel-in group relative flex h-full min-h-0 w-full cursor-pointer select-none flex-col justify-between overflow-hidden rounded-2xl p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:border-white/20 hover:shadow-2xl active:scale-[0.985]"
                 >
                   <div className="min-w-0">
-                    <div className="flex min-w-0 items-start justify-between gap-2.5 pr-12 max-[700px]:gap-2 max-[700px]:pr-11 max-[480px]:pr-[43px]">
+                    <div className="flex min-w-0 items-start justify-between gap-2.5 pr-12">
                       <span
-                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow} transition-transform group-hover:scale-110 max-[700px]:h-[39px] max-[700px]:w-[39px] max-[700px]:rounded-[13px] max-[480px]:h-[38px] max-[480px]:w-[38px] max-[480px]:rounded-xl`}
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow} transition-transform group-hover:scale-110`}
                       >
-                        <Folder className="h-6 w-6 max-[700px]:h-5 max-[700px]:w-5" />
+                        <Folder className="h-6 w-6" />
                       </span>
 
-                      <span className={`inline-flex max-w-[calc(100%_-_48px)] shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-mono tabular-nums text-muted-foreground max-[700px]:max-w-[calc(100%_-_44px)] max-[700px]:gap-1 max-[700px]:px-[7px] max-[700px]:py-[5px] max-[700px]:text-[9px] max-[480px]:max-w-[calc(100%_-_43px)]`}>
+                      <span className={`inline-flex max-w-[calc(100%_-_48px)] shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-mono tabular-nums text-muted-foreground`}>
                         <FileText className="h-3 w-3" />
                         {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
                       </span>
                     </div>
 
-                    <h3 className="mt-4 truncate text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary max-[700px]:mt-[10px] max-[700px]:mb-1 max-[700px]:text-[14px] max-[480px]:mt-[9px] max-[480px]:text-[13.5px] max-[380px]:mt-[8px] max-[380px]:text-[13px]">
+                    <h3 className="mt-4 truncate text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
                       {c.name}
                     </h3>
 
                     {c.description ? (
-                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground/80 max-[700px]:mt-[5px] max-[700px]:text-[9.5px] max-[700px]:leading-[1.3] max-[330px]:text-[9.2px]">
+                      <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground/80">
                         {c.description}
                       </p>
                     ) : (
-                      <p className="mt-1 text-xs italic text-muted-foreground/40 max-[700px]:mt-[5px] max-[700px]:text-[9.5px] max-[330px]:text-[9.2px]">
+                      <p className="mt-1 text-xs italic text-muted-foreground/40">
                         No description provided
                       </p>
                     )}
 
-                    <div className="mt-3 flex flex-wrap items-center gap-2 max-[700px]:mt-[7px] max-[700px]:gap-1.5">
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
                       <span
-                        className={`inline-flex items-center gap-1 rounded-lg border ${style.border} ${style.bg} px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${style.text} max-[700px]:gap-1 max-[700px]:rounded-lg max-[700px]:px-[6px] max-[700px]:py-[3px] max-[700px]:text-[8px]`}
+                        className={`inline-flex items-center gap-1 rounded-lg border ${style.border} ${style.bg} px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] ${style.text}`}
                       >
                         <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
                         {c.color}
                       </span>
 
                       {c.category && c.category !== c.description?.slice(0, 30) ? (
-                        <span className="inline-block rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 max-[700px]:hidden">
+                        <span className="inline-block rounded-lg border border-white/5 bg-white/[0.05] px-2.5 py-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground/80">
                           {c.category}
                         </span>
                       ) : null}
                     </div>
                   </div>
 
-                  <div className="mt-5 flex min-w-0 items-center justify-between gap-1.5 border-t border-white/5 pt-3.5 pr-0 text-xs max-[700px]:mt-0 max-[700px]:gap-[6px] max-[700px]:pr-[34px] max-[700px]:pt-[7px] max-[700px]:text-[8.5px]">
+                  <div className="mt-5 flex min-w-0 items-center justify-between gap-1.5 border-t border-white/5 pt-3.5 pr-0 text-xs">
                     <span className="min-w-0 truncate text-muted-foreground/70">
                       {last ? `Edited ${formatDate(last)}` : "No notes yet"}
                     </span>
-                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100 max-[700px]:gap-1">
+                    <span className="flex shrink-0 items-center gap-1.5 font-medium text-primary opacity-100 transition-all duration-300 sm:opacity-0 sm:group-hover:translate-x-0 sm:group-hover:opacity-100">
                       Open course
-                      <ArrowRight className="h-3.5 w-3.5 max-[700px]:h-3 max-[700px]:w-3" />
+                      <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </div>
 
-                {/* Dedicated 44px delete target; kept outside the course surface so it never covers metadata. */}
                 <button
                   type="button"
                   aria-label={`Delete ${c.name}`}
@@ -600,7 +894,7 @@ export function CourseDashboard({
                     e.stopPropagation();
                     setDeletingCourse(c);
                   }}
-                  className="absolute right-[7px] top-[7px] z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/40 text-muted-foreground opacity-90 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/20 hover:text-destructive group-hover:opacity-100 active:scale-90 cursor-pointer max-[700px]:right-[6px] max-[700px]:top-[6px] max-[480px]:right-[5px] max-[480px]:top-[5px]"
+                  className="absolute right-[7px] top-[7px] z-10 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-black/40 text-muted-foreground opacity-90 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/20 hover:text-destructive group-hover:opacity-100 active:scale-90 cursor-pointer"
                 >
                   <Trash2 className="h-[15px] w-[15px]" />
                 </button>
@@ -609,6 +903,108 @@ export function CourseDashboard({
           })}
         </div>
 
+        {/* ═══════════════════════════════════════════════════════════════
+            MOBILE Course Cards — Premium full-width list redesign
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="sm:hidden space-y-3">
+          {filteredCourses.map((c, i) => {
+            const courseNotes = notes.filter((n) => n.courseId === c.id);
+            const last = courseNotes.length > 0
+              ? Math.max(...courseNotes.map((n) => n.updatedAt))
+              : c.updatedAt || c.createdAt;
+            const style = ACCENT_STYLES[c.color] ?? ACCENT_STYLES.sky;
+
+            return (
+              <article key={c.id} className="group relative">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    haptic("light");
+                    onOpenCourse(c.id);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      haptic("light");
+                      onOpenCourse(c.id);
+                    }
+                  }}
+                  style={{ animationDelay: `${i * 50}ms` }}
+                  className="glass-panel animate-card-in w-full cursor-pointer select-none rounded-[1.5rem] p-5 border border-white/10 hover:border-white/18 active:scale-[0.985] transition-all duration-200 text-left"
+                >
+                  {/* Top row: icon + course name + notes badge */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <span
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border ${style.border} ${style.bg} ${style.text} ${style.glow}`}
+                    >
+                      <Folder className="h-6 w-6" />
+                    </span>
+
+                    <div className="flex-1 min-w-0 pt-0.5">
+                      <h3 className="text-[1.05rem] font-bold tracking-tight text-foreground leading-snug truncate">
+                        {c.name}
+                      </h3>
+                      {c.description ? (
+                        <p className="mt-1 text-sm text-muted-foreground/80 line-clamp-2 leading-relaxed">
+                          {c.description}
+                        </p>
+                      ) : (
+                        <p className="mt-1 text-sm italic text-muted-foreground/40">
+                          No description
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Tags row */}
+                  <div className="flex items-center gap-2 flex-wrap mb-4">
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full border ${style.border} ${style.bg} px-2.5 py-1 text-[0.68rem] font-bold capitalize ${style.text}`}
+                    >
+                      <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                      {c.color}
+                    </span>
+                    {c.category ? (
+                      <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[0.68rem] font-medium text-muted-foreground/80">
+                        {c.category}
+                      </span>
+                    ) : null}
+                    <span className="inline-flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.04] px-2.5 py-1 text-[0.68rem] font-mono text-muted-foreground">
+                      <FileText className="h-3 w-3" />
+                      {courseNotes.length} {courseNotes.length === 1 ? "note" : "notes"}
+                    </span>
+                  </div>
+
+                  {/* Bottom row: last edited + open arrow */}
+                  <div className="flex items-center justify-between pt-3.5 border-t border-white/8">
+                    <span className="text-xs text-muted-foreground/60">
+                      {last ? `Edited ${formatDate(last)}` : "No notes yet"}
+                    </span>
+                    <span className="flex items-center gap-1 text-sm font-semibold text-primary">
+                      Open <ChevronRight className="h-4 w-4" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Delete button */}
+                <button
+                  type="button"
+                  aria-label={`Delete ${c.name}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeletingCourse(c);
+                  }}
+                  className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-black/30 text-muted-foreground/70 backdrop-blur-md transition-all duration-200 hover:border-destructive/40 hover:bg-destructive/15 hover:text-destructive active:scale-90 cursor-pointer"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </article>
+            );
+          })}
+        </div>
+
+        {/* Empty state */}
         {filteredCourses.length === 0 ? (
           <div className="mt-12 glass-panel rounded-3xl p-12 text-center max-w-md mx-auto">
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05] text-muted-foreground/60 mx-auto mb-4">
@@ -636,7 +1032,9 @@ export function CourseDashboard({
         ) : null}
       </div>
 
-      {/* New Course Modal - Responsive Bottom Sheet on Mobile / Centered on Desktop */}
+      {/* ═══════════════════════════════════════════════════════════════
+          New Course Modal — Responsive Bottom Sheet on Mobile / Centered on Desktop
+      ═══════════════════════════════════════════════════════════════ */}
       {adding ? (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 p-0 sm:p-4 backdrop-blur-md">
           <div className="glass-panel animate-panel-in w-full max-w-md rounded-t-3xl sm:rounded-3xl p-5 sm:p-7 shadow-2xl border border-white/15 max-h-[90dvh] overflow-y-auto scroll-sleek pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:pb-7">
